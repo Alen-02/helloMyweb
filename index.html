@@ -24,9 +24,9 @@
             <div class="nav-middle">
                 <ul class="nav-links">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">首页</a>
+                        <a href="index.html" class="nav-link">首页</a>
                         <span class="nav-separator">/</span>
-                        <a href="#" class="nav-link">茶叶文化</a>
+                        <a href="story.html" class="nav-link">茶叶文化</a>
                     </li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@
         <div class="bg-shape-1"></div>
         <div class="bg-shape-2"></div>
         <div class="bg-shape-3"></div>
- 
+
         <!-- 内容区域布局 -->
         <div class="content-container">
             <!-- 左侧内容 -->
@@ -57,64 +57,63 @@
                     <div class="tea-text">东方茶文化的现代之旅</div>
                 </div>
 
-                <!-- 主标题 -->
-                <h1>探索世界茶叶文化,&ensp;邂<br>逅一杯茶的四季风味</h1>
+                <!-- 主标题 - 移除硬编码换行和特殊空格 -->
+                <h1 class="main-title">探索世界茶叶文化，邂逅一杯茶的四季风味</h1>
 
-                <!-- 描述文本 -->
+                <!-- 描述文本 - 移除硬编码换行 -->
                 <p class="desc">
-                    千年茶脉，从未断流。它从古典的诗卷中走出，融入<br>现代的节奏。我们用年轻的方式，续写古老的茶香故事。<br>让喝茶，成为一种自然而然的当代风尚。
+                    千年茶脉，从未断流。它从古典的诗卷中走出，融入现代的节奏。我们用年轻的方式，续写古老的茶香故事。让喝茶，成为一种自然而然的当代风尚。
                 </p>
             </div>
 
-            <!-- 右侧缩小版轮播图 -->
-            <div class="carousel-small">
-                <div class="carousel-container">
-                    <div class="carousel-slides">
-                        <div class="carousel-slide active">
-                            <img src="素材\微信图片_20251118165010_178_135.jpg" alt="茶叶展示1">
-                            <div class="carousel-caption">
-                                <h3></h3>
-                                <p>感受春天的第一缕茶香</p>
-                            </div>
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="素材\微信图片_20251118165011_179_135.jpg" alt="茶叶展示2">
-                            <div class="carousel-caption">
-                                <h3></h3>
-                                <p>醇厚滋味，回味无穷</p>
-                            </div>
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="素材\微信图片_20251118165013_181_135.jpg" alt="茶叶展示3">
-                            <div class="carousel-caption">
-                                <h3></h3>
-                                <p>岁月沉淀的经典味道</p>
-                            </div>
-                        </div>
-                        <div class="carousel-slide">
-                            <img src="素材\微信图片_20251118165014_182_135.jpg" alt="茶叶展示4">
-                            <div class="carousel-caption">
-                                <h3></h3>
-                                <p>自然纯净，淡雅宜人</p>
-                            </div>
+            <!-- 右侧轮播图 -->
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <div class="carousel-slide active">
+                        <!-- 修改为正斜杠路径分隔符 -->
+                        <img src="素材/微信图片_20251118165010_178_135.jpg" alt="茶叶展示1">
+                        <div class="carousel-caption">
+                         
+                            <p>感受春天的第一缕茶香</p>
                         </div>
                     </div>
-                    
-                    <!-- 轮播控制按钮 -->
-                    <button class="carousel-control prev" aria-label="上一张">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="carousel-control next" aria-label="下一张">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    
-                    <!-- 轮播指示器 -->
-                    <div class="carousel-indicators">
-                        <button class="indicator active" data-index="0"></button>
-                        <button class="indicator" data-index="1"></button>
-                        <button class="indicator" data-index="2"></button>
-                        <button class="indicator" data-index="3"></button>
+                    <div class="carousel-slide">
+                        <img src="素材/微信图片_20251118165011_179_135.jpg" alt="茶叶展示2">
+                        <div class="carousel-caption">
+                          
+                            <p>醇厚滋味，回味无穷</p>
+                        </div>
                     </div>
+                    <div class="carousel-slide">
+                        <img src="素材/微信图片_20251118165013_181_135.jpg" alt="茶叶展示3">
+                        <div class="carousel-caption">
+                          
+                            <p>岁月沉淀的经典味道</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="素材/微信图片_20251118165014_182_135.jpg" alt="茶叶展示4">
+                        <div class="carousel-caption">
+                          
+                            <p>自然纯净，淡雅宜人</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 轮播控制按钮 -->
+                <button class="carousel-control prev" aria-label="上一张">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-control next" aria-label="下一张">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <!-- 轮播指示器 -->
+                <div class="carousel-indicators">
+                    <button class="indicator active" data-index="0"></button>
+                    <button class="indicator" data-index="1"></button>
+                    <button class="indicator" data-index="2"></button>
+                    <button class="indicator" data-index="3"></button>
                 </div>
             </div>
         </div>
@@ -122,40 +121,40 @@
         <!-- 茶叶功能卡片区域 -->
         <div class="card-container">
             <div class="card" onclick="window.location.href='map.html'">
-    <div class="card-icon">
-        <i class="fas fa-map-marked-alt"></i>
-    </div>
-    <h3 class="card-title">沉浸式茶旅地图</h3>
-    <p class="card-desc">以互动方式探索中国与世界茶产地，收藏茶园故事与当地茶礼习俗，规划属于你的品茶旅程。</p>
-    <a href="#map" class="card-link">查看茶旅地图 <i class="fas fa-arrow-right"></i></a>
-</div>
+                <div class="card-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3 class="card-title">沉浸式茶旅地图</h3>
+                <p class="card-desc">以互动方式探索中国与世界茶产地，收藏茶园故事与当地茶礼习俗，规划属于你的品茶旅程。</p>
+                <a href="map.html" class="card-link">查看茶旅地图 <i class="fas fa-arrow-right"></i></a>
+            </div>
 
-<div class="card" onclick="window.location.href='card.html'">
-    <div class="card-icon">
-        <i class="fas fa-leaf"></i>
-    </div>
-    <h3 class="card-title">专业茶叶知识库</h3>
-    <p class="card-desc">从茶叶品类、风味。配合图文信息帮助你快速掌握核心知识，成为懂茶的品茗人。</p>
-    <a href="#knowledge" class="card-link">走进茶叶百科 <i class="fas fa-arrow-right"></i></a>
-</div>
+            <div class="card" onclick="window.location.href='card.html'">
+                <div class="card-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3 class="card-title">专业茶叶知识库</h3>
+                <p class="card-desc">从茶叶品类、风味。配合图文信息帮助你快速掌握核心知识，成为懂茶的品茗人。</p>
+                <a href="card.html" class="card-link">走进茶叶百科 <i class="fas fa-arrow-right"></i></a>
+            </div>
 
-<div class="card" onclick="window.location.href='flow.html'">
-    <div class="card-icon">
-        <i class="fas fa-seedling"></i>
-    </div>
-    <h3 class="card-title">从茶园到茶席的旅程</h3>
-    <p class="card-desc">按照采摘、制茶、醒茶与品饮的节奏，细致体验一杯好茶背后的时间与匠心。</p>
-    <a href="#flow" class="card-link">感受茶叶的一生 <i class="fas fa-arrow-right"></i></a>
-</div>
+            <div class="card" onclick="window.location.href='flow.html'">
+                <div class="card-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3 class="card-title">从茶园到茶席的旅程</h3>
+                <p class="card-desc">按照采摘、制茶、醒茶与品饮的节奏，细致体验一杯好茶背后的时间与匠心。</p>
+                <a href="flow.html" class="card-link">感受茶叶的一生 <i class="fas fa-arrow-right"></i></a>
+            </div>
 
-<div class="card" onclick="window.location.href='tech-sh.html'">
-    <div class="card-icon">
-        <i class="fas fa-mobile-alt"></i>
-    </div>
-    <h3 class="card-title">Pure Tea 茶文化学院</h3>
-    <p class="card-desc">以题作舟、以知为桨，邀你在一问一答的涟漪里，打捞茶叶的千年风骨与回甘真意。</p>
-    <a href="#tech-sh" class="card-link">挑战茶知识 <i class="fas fa-arrow-right"></i></a>
-</div>
+            <div class="card" onclick="window.location.href='tech-sh.html'">
+                <div class="card-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="card-title">Pure Tea 茶文化学院</h3>
+                <p class="card-desc">以题作舟、以知为桨，邀你在一问一答的涟漪里，打捞茶叶的千年风骨与回甘真意。</p>
+                <a href="tech-sh.html" class="card-link">挑战茶知识 <i class="fas fa-arrow-right"></i></a>
+            </div>
         </div>
     </div>
      <div class="footer">
@@ -165,7 +164,7 @@
     <!-- JavaScript 轮播功能 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const carousel = document.querySelector('.carousel-small');
+            const carousel = document.querySelector('.carousel-container');
             const slides = document.querySelectorAll('.carousel-slide');
             const indicators = document.querySelectorAll('.indicator');
             const prevBtn = document.querySelector('.carousel-control.prev');
