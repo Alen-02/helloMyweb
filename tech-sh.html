@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molly Tea 茶文化学院</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f6fcfa;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative; /* 添加相对定位作为返回按钮的定位参考 */
+        }
+        
+        /* 返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .back-button:hover {
+            background-color: #4caf50;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .back-button i {
+            color: #4caf50;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover i {
+            color: #fff;
+            transform: translateX(-3px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 60px; /* 增加顶部间距，避免被返回按钮遮挡 */
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            min-height: 450px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            /* 添加顶部装饰线 */
+            border-top: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        /* 为每个卡片添加不同的顶部装饰线颜色 */
+        .card:nth-child(1) {
+            border-top-color: #00b46a;
+        }
+
+        .card:nth-child(2) {
+            border-top-color: #4096ff;
+        }
+
+        .card:nth-child(3) {
+            border-top-color: #ff9933;
+        }
+
+        .card:nth-child(4) {
+            border-top-color: #00b46a;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 添加卡片顶部图形背景 */
+        .card-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .card-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-number-01 {
+            background-color: #e6f7f0;
+            color: #00b46a;
+        }
+
+        .card-number-02 {
+            background-color: #e6f2ff;
+            color: #4096ff;
+        }
+
+        .card-number-03 {
+            background-color: #fff2e6;
+            color: #ff9933;
+        }
+
+        .card-number-04 {
+            background-color: #e6f7f0;
+            color: #00b46a;
+        }
+
+        /* 添加卡片图标 */
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card:nth-child(1) .card-icon {
+            color: #00b46a;
+        }
+
+        .card:nth-child(2) .card-icon {
+            color: #4096ff;
+        }
+
+        .card:nth-child(3) .card-icon {
+            color: #ff9933;
+        }
+
+        .card:nth-child(4) .card-icon {
+            color: #00b46a;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #222222;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 24px;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-features li {
+            font-size: 0.85rem;
+            color: #292929;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        /* 美化列表项前面的标记 */
+        .card-features li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #00b46a;
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        .card:nth-child(1) .card-features li:before {
+            color: #00b46a;
+        }
+
+        .card:nth-child(2) .card-features li:before {
+            color: #4096ff;
+        }
+
+        .card:nth-child(3) .card-features li:before {
+            color: #ff9933;
+        }
+
+        .card:nth-child(4) .card-features li:before {
+            color: #00b46a;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #4096ff;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-link:after {
+            content: "→";
+            margin-left: 4px;
+            transition: transform 0.2s ease;
+        }
+
+        .card-link:hover {
+            color: #1877f2;
+        }
+
+        .card-link:hover:after {
+            transform: translateX(3px);
+        }
+
+        /* 卡片下方的CTA区域 - 增强版 */
+        .cta-section {
+            background: linear-gradient(135deg, #f0f9f0 0%, #e6f2e6 100%);
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            border: 1px solid #d4e6d4;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 添加背景装饰元素 */
+        .cta-section::before {
+            content: '🍃';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.05;
+            top: -50px;
+            right: -50px;
+            z-index: 0;
+        }
+        
+        .cta-section::after {
+            content: '🍵';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.05;
+            bottom: -40px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .cta-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #e6f2e6 0%, #d4e6d4 100%);
+            border-color: #b8d9b8;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #2c5e3e;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 添加标题装饰 */
+        .cta-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #00b46a, #4caf50);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .cta-section:hover .cta-content h3::after {
+            width: 80px;
+        }
+
+        .cta-content p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 24px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 添加特色图标展示 */
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .cta-feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 120px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .cta-feature-icon {
+            font-size: 2.5rem;
+            color: #00b46a;
+            margin-bottom: 12px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 180, 106, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .cta-feature-item:hover .cta-feature-icon {
+            background-color: rgba(0, 180, 106, 0.2);
+            transform: scale(1.1);
+        }
+
+        .cta-feature-text {
+            font-size: 0.85rem;
+            color: #2c5e3e;
+            font-weight: 500;
+        }
+
+        /* 电子邮件表单样式 */
+        .cta-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .cta-form-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .cta-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #d4e6d4;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cta-input:focus {
+            border-color: #00b46a;
+            background-color: #fff;
+        }
+
+        .cta-input::placeholder {
+            color: #999;
+        }
+
+        /* 增强的CTA按钮 */
+        .cta-button {
+            display: inline-block;
+            background-color: #00b46a;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            box-shadow: 0 4px 6px rgba(0, 180, 106, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #00a05a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 180, 106, 0.3);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* 优惠提示 */
+        .cta-offer {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 500;
+            margin-top: 16px;
+            padding: 10px 16px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-offer i {
+            color: #ff9933;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-button {
+                width: 45px;
+                height: 45px;
+                top: -5px;
+                left: -5px;
+            }
+            
+            .back-button i {
+                font-size: 18px;
+            }
+            
+            .header {
+                margin-top: 50px; /* 移动端调整顶部间距 */
+            }
+            
+            .cta-section {
+                padding: 30px 20px;
+            }
+            
+            .cta-content h3 {
+                font-size: 1.5rem;
+            }
+            
+            .cta-features {
+                gap: 20px;
+            }
+            
+            .cta-feature-item {
+                max-width: 100px;
+            }
+            
+            .cta-feature-icon {
+                font-size: 2rem;
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 返回按钮 -->
+        <button class="back-button" onclick="window.location.href='tea-web.html'">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        
+        <div class="header">
+            <h1>Pure Tea 茶文化学院</h1>
+            <p>以茶为引，赴一场温润的文化之约。</p>
+        </div>
+
+        <div class="cards-grid">
+           <div class="card" onclick="window.location.href='andwer.html'">
+                <div class="card-bg">♦</div>
+                <div class="card-number card-number-01">01</div>
+                <i class="card-icon fas fa-question-circle"></i>
+                <h2 class="card-title">茶知识挑战</h2>
+                <p class="card-desc">通过互动问答检验你的茶文化掌握程度，边玩边学，加深记忆。</p>
+                <ul class="card-features">
+                    <li>茶知识问答，玩着学更难忘～</li>
+                    <li>互动答茶题，趣味记茶香！</li>
+                    <li>一问一知茶，边玩边深化～</li>
+                </ul>
+                <a href="tea-quiz.html" class="card-link">开始挑战</a>
+            </div>
+
+            <div class="card" onclick="window.location.href='brew-tea.html'">
+                <div class="card-bg">☕</div>
+                <div class="card-number card-number-02">02</div>
+                <i class="card-icon fas fa-coffee"></i>
+                <h2 class="card-title">冲泡实践</h2>
+                <p class="card-desc">结合水温、器具与注水节奏，设计属于你的泡茶实验计划，记录每一次茶汤变化。</p>
+                <ul class="card-features">
+                    <li>茶具挑选清单与水质建议</li>
+                    <li>七日冲泡练习打卡表</li>
+                    <li>香、色、味的品评模板</li>
+                </ul>
+                <a href="brewing-guide.html" class="card-link">学习冲泡技巧</a>
+            </div>
+
+            <div class="card" onclick="window.location.href='story.html'">
+                <div class="card-bg">📖</div>
+                <div class="card-number card-number-03">03</div>
+                <i class="card-icon fas fa-book"></i>
+                <h2 class="card-title">茶旅故事集</h2>
+                <p class="card-desc">收藏各地茶人、茶园与茶礼的真实故事，让旅行与品茶产生更深的连结。</p>
+                <ul class="card-features">
+                    <li>一杯茶，一段故事，让旅行更有温度。</li>
+                    <li>茶园藏过往，茶礼载真情，旅行留回忆。</li>
+                    <li>记录旅途中遇见的茶人故事</li>
+                </ul>
+                <a href="tea-stories.html" class="card-link">探索茶旅故事</a>
+            </div>
+
+            <div class="card" onclick="window.location.href='notebook.html'">
+                <div class="card-bg">👥</div>
+                <div class="card-number card-number-04">04</div>
+                <i class="card-icon fas fa-users"></i>
+                <h2 class="card-title">分享与共学</h2>
+                <p class="card-desc">把笔记、照片与心得整理成故事，与茶友交流，也让家人与朋友一起体验茶香。</p>
+                <ul class="card-features">
+                    <li>线上茶会与问答直播提醒</li>
+                    <li>茶知识游戏中的阶段挑战</li>
+                    <li>社群茶席布置与茶点灵感</li>
+                </ul>
+                <a href="tea-community.html" class="card-link">加入茶友社群</a>
+            </div>
+        </div>
+
+        <!-- 增强版CTA模块 -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <h3>开始您的茶艺之旅</h3>
+                <p>加入我们的茶文化学院，探索茶的奥秘，体验茶道的魅力。</p>
+                
+                <!-- 添加课程特色图标 -->
+                <div class="cta-features">
+                    <div class="cta-feature-item">
+                        <div class="cta-feature-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="cta-feature-text">专业指导</div>
+                    </div>
+                    <div class="cta-feature-item">
+                        <div class="cta-feature-icon">
+                            <i class="fas fa-hand-sparkles"></i>
+                        </div>
+                        <div class="cta-feature-text">实践体验</div>
+                    </div>
+                    <div class="cta-feature-item">
+                        <div class="cta-feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="cta-feature-text">茶友社群</div>
+                    </div>
+                    <div class="cta-feature-item">
+                        <div class="cta-feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="cta-feature-text">专属证书</div>
+                    </div>
+                </div>
+                
+                <!-- 添加简单表单 -->
+                <form class="cta-form" onsubmit="alert('感谢您的订阅！我们将尽快与您联系。'); return false;">
+                    <div class="cta-form-group">
+                        <input type="email" class="cta-input" placeholder="请输入您的邮箱地址" required>
+                    </div>
+                    <a href="#" class="cta-button">立即报名</a>
+                </form>
+                
+                <!-- 添加优惠提示 -->
+                <div class="cta-offer">
+                    <i class="fas fa-gift"></i>
+                    前50名报名可获得精美茶具套装
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

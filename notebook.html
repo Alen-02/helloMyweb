@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分享与共学 - Pure Tea 茶文化学院</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f6fcfa;
+            padding: 80px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 茶叶装饰元素 */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background-image: url('素材\微信图片_20251118163806_173_135.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        body::before {
+            top: -50px;
+            left: -100px;
+            transform: rotate(-30deg);
+        }
+
+        body::after {
+            bottom: -50px;
+            right: -100px;
+            transform: rotate(30deg);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* 页面头部 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+            padding-top: 10px; /* 为返回按钮留出空间 */
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #00b46a, #008952);
+            border-radius: 2px;
+        }
+
+        .page-header p {
+            font-size: 1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 20px auto 0;
+            line-height: 1.6;
+        }
+
+        /* 优化后的返回首页按钮 */
+        .back-link {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #008952;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.95rem;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background-color: rgba(0, 180, 106, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-link:hover {
+            background-color: rgba(0, 180, 106, 0.2);
+            transform: translateX(-3px);
+            border-color: rgba(0, 180, 106, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link i {
+            margin-right: 6px;
+            font-size: 1.1rem;
+        }
+
+        .back-link:active {
+            transform: translateX(-1px);
+        }
+
+        /* 核心内容区 */
+        .content-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        /* 模块通用样式 */
+        .module {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #00b46a;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .module:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .module-title i {
+            color: #00b46a;
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        /* 创建笔记按钮 */
+        .create-note-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #00b46a, #008952);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 180, 106, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .create-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 180, 106, 0.4);
+        }
+
+        .create-note-btn i {
+            margin-right: 8px;
+        }
+
+        /* 社群动态 */
+        .community-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post-card {
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-left: 3px solid transparent;
+        }
+
+        .post-card:hover {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left-color: #00b46a;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e6f7f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b46a;
+            margin-right: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .post-card:hover .post-avatar {
+            background-color: #00b46a;
+            color: white;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .post-time {
+            font-size: 0.8rem;
+            color: #999;
+            margin-left: auto;
+        }
+
+        .post-content {
+            font-size: 0.9rem;
+            color: #292929;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .post-card:hover .post-content {
+            color: #00b46a;
+        }
+
+        .post-img {
+            width: 40%;
+            height: 180px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-bottom: 12px;
+            background-color: #eee;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-img {
+            transform: scale(1.02);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .post-action:hover {
+            background-color: rgba(0, 180, 106, 0.1);
+            color: #00b46a;
+        }
+
+        .post-action.liked {
+            color: #ff4757;
+        }
+
+        .post-action.commented {
+            color: #00b46a;
+        }
+
+        /* 笔记分享模块 */
+        .recent-notes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .note-card {
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #00b46a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .note-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .note-card.active {
+            background-color: #00b46a;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .note-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .note-card.active .note-title {
+            color: white;
+        }
+
+        .note-meta {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .note-card.active .note-meta {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .note-excerpt {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+            margin-top: 8px;
+        }
+
+        .note-card.active .note-excerpt {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 热门笔记模块 */
+        .popular-notes {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+
+        .popular-notes h3 {
+            margin-bottom: 16px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .popular-note-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .popular-note-item:hover {
+            color: #00b46a;
+        }
+
+        .popular-note-rank {
+            width: 24px;
+            height: 24px;
+            background-color: #00b46a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .popular-note-rank.rank-1 {
+            background-color: #ffd700;
+        }
+
+        .popular-note-rank.rank-2 {
+            background-color: #c0c0c0;
+        }
+
+        .popular-note-rank.rank-3 {
+            background-color: #cd7f32;
+        }
+
+        .popular-note-content {
+            flex-grow: 1;
+        }
+
+        .popular-note-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .popular-note-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        /* 评论区域样式 */
+        .note-detail {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .note-detail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00b46a, #008952);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .detail-header {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #00b46a;
+        }
+
+        .detail-content {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .detail-content p {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .detail-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .comments-section {
+            margin-top: 24px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comments-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .comments-title i {
+            color: #00b46a;
+            margin-right: 8px;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e6f7f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b46a;
+            flex-shrink: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-form:hover .user-avatar {
+            background-color: #00b46a;
+            color: white;
+        }
+
+        .comment-input {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .comment-input textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+            min-height: 100px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .comment-input textarea:focus {
+            outline: none;
+            border-color: #00b46a;
+            box-shadow: 0 0 0 2px rgba(0, 180, 106, 0.1);
+        }
+
+        .submit-comment {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            padding: 6px 12px;
+            background-color: #00b46a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-comment:hover {
+            background-color: #00a05a;
+            transform: translateY(-1px);
+        }
+
+        .submit-comment:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e6f7f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00b46a;
+            flex-shrink: 0;
+        }
+
+        .comment-content {
+            flex-grow: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .comment-text {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .comment-time {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .comment-action {
+            font-size: 0.75rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .comment-action:hover {
+            color: #00b46a;
+        }
+
+        /* 茶话题讨论 */
+        .tea-topics {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+
+        .tea-topics h3 {
+            margin-bottom: 16px;
+            font-size: 1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .tea-topics h3 i {
+            color: #00b46a;
+            margin-right: 8px;
+        }
+
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topic-tag {
+            padding: 6px 12px;
+            background-color: #f0f9f5;
+            color: #00b46a;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .topic-tag:hover {
+            background-color: #00b46a;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 180, 106, 0.3);
+        }
+
+        /* 加载更多按钮 */
+        .load-more {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            border: 1px solid #00b46a;
+            color: #00b46a;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+
+        .load-more:hover {
+            background-color: #00b46a;
+            color: white;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background-color: #00b46a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 180, 106, 0.3);
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #008952;
+            transform: translateY(-3px);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            body {
+                padding: 60px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .recent-notes {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .module {
+                padding: 20px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 50px 10px;
+            }
+
+            .page-header {
+                text-align: center;
+                padding-left: 60px;
+            }
+
+            .back-link {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+                left: 10px;
+            }
+
+            .recent-notes {
+                grid-template-columns: 1fr;
+            }
+            
+            .comment-form {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .post-img {
+                height: 140px;
+            }
+
+            .module {
+                padding: 16px;
+            }
+
+            .back-to-top {
+                bottom: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        .footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-radius: 8px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <div class="page-header">
+            <a href="tech-sh.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </a>
+            <h1>分享与共学</h1>
+            <p>与茶友交流心得，共享茶趣，一起成长</p>
+        </div>
+
+        <!-- 核心内容区 -->
+        <div class="content-section">
+            <!-- 社群动态模块 -->
+            <div class="module">
+                <h2 class="module-title">
+                    <i class="fas fa-comments"></i> 社群动态
+                </h2>
+                <button class="create-note-btn">
+                    <i class="fas fa-plus"></i> 发布动态
+                </button>
+                <div class="community-feed">
+                    <!-- 动态卡片1 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="post-author">茶客小语</span>
+                            <span class="post-time">今天 10:23</span>
+                        </div>
+                        <div class="post-content">
+                            今日冲泡了正山小种，水温控制在95℃，出汤时间15秒，茶汤橙红透亮，香气醇厚回甘～分享一张冲泡图！
+                        </div>
+                        <img src="素材\微信图片_20251118170909_184_135.jpg" class="post-img" alt="正山小种冲泡">
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> 12
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> 3
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> 分享
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 动态卡片2 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="post-author">茶农阿杰</span>
+                            <span class="post-time">昨天 16:45</span>
+                        </div>
+                        <div class="post-content">
+                            春茶采摘季结束，分享一组茶园实景图～今年雨水充足，茶叶品质超棒！欢迎茶友们交流品鉴心得～
+                        </div>
+                        <img src="素材\VCG211363364541.jpg" class="post-img" alt="茶园实景">
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> 28
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> 7
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> 分享
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 新增动态卡片3 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="post-author">茶道大师</span>
+                            <span class="post-time">3天前</span>
+                        </div>
+                        <div class="post-content">
+                            茶文化研究分享：古人常说"茶有真香"，真正的茶香是茶叶自身的香气，无需添加其他香料。不同的茶类，香气特点各异，这也是品鉴茶叶的重要指标之一。
+                        </div>
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <i class="fas fa-heart"></i> 42
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-comment"></i> 15
+                            </div>
+                            <div class="post-action">
+                                <i class="fas fa-share"></i> 分享
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="load-more">加载更多</button>
+            </div>
+
+            <!-- 笔记分享模块 -->
+            <div class="module">
+                <h2 class="module-title">
+                    <i class="fas fa-sticky-note"></i> 笔记分享
+                </h2>
+                <button class="create-note-btn">
+                    <i class="fas fa-edit"></i> 写笔记
+                </button>
+                
+                <h3 style="margin: 24px 0 16px; font-size: 1rem; color: #333;">最近笔记</h3>
+                <div class="recent-notes">
+                    <!-- 笔记卡片1 -->
+                    <div class="note-card active" data-note="longjing">
+                        <div class="note-title">龙井冲泡技巧总结</div>
+                        <div class="note-meta">茶客小雅 · 3天前</div>
+                        <p class="note-excerpt">明前龙井冲泡水温85℃最佳，玻璃杯冲泡更显汤色...</p>
+                    </div>
+                    <!-- 笔记卡片2 -->
+                    <div class="note-card" data-note="teacategories">
+                        <div class="note-title">六大茶类口感对比</div>
+                        <div class="note-meta">茶友老林 · 1周前</div>
+                        <p class="note-excerpt">普洱熟茶醇厚顺滑，武夷岩茶岩韵明显，各有特色...</p>
+                    </div>
+                    <!-- 笔记卡片3 -->
+                    <div class="note-card" data-note="teapairing">
+                        <div class="note-title">茶点搭配指南</div>
+                        <div class="note-meta">小茶仙 · 2周前</div>
+                        <p class="note-excerpt">绿茶配绿豆糕，红茶配曲奇，口感互补超搭～</p>
+                    </div>
+                    <!-- 新增笔记卡片4 -->
+                    <div class="note-card" data-note="teapotcare">
+                        <div class="note-title">紫砂壶保养秘诀</div>
+                        <div class="note-meta">壶友老李 · 2周前</div>
+                        <p class="note-excerpt">养壶需耐心，每次用完要彻底清洗，避免茶垢积累...</p>
+                    </div>
+                </div>
+
+                <!-- 热门笔记 -->
+                <div class="popular-notes">
+                    <h3><i class="fas fa-fire"></i> 热门笔记</h3>
+                    <div class="popular-note-item">
+                        <div class="popular-note-rank rank-1">1</div>
+                        <div class="popular-note-content">
+                            <div class="popular-note-title">茶与健康：科学解读茶文化</div>
+                            <div class="popular-note-stats">
+                                <span><i class="far fa-eye"></i> 2.3k</span>
+                                <span><i class="far fa-comment"></i> 86</span>
+                                <span><i class="far fa-heart"></i> 432</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popular-note-item">
+                        <div class="popular-note-rank rank-2">2</div>
+                        <div class="popular-note-content">
+                            <div class="popular-note-title">新手如何挑选适合自己的茶叶</div>
+                            <div class="popular-note-stats">
+                                <span><i class="far fa-eye"></i> 1.8k</span>
+                                <span><i class="far fa-comment"></i> 72</span>
+                                <span><i class="far fa-heart"></i> 319</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popular-note-item">
+                        <div class="popular-note-rank rank-3">3</div>
+                        <div class="popular-note-content">
+                            <div class="popular-note-title">茶席设计与布置艺术</div>
+                            <div class="popular-note-stats">
+                                <span><i class="far fa-eye"></i> 1.5k</span>
+                                <span><i class="far fa-comment"></i> 48</span>
+                                <span><i class="far fa-heart"></i> 287</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 笔记详情与评论区 -->
+                <div class="note-detail" id="noteDetail">
+                    <div class="detail-header">
+                        <div class="detail-title">龙井冲泡技巧总结</div>
+                        <div class="note-meta">茶客小雅 · 3天前</div>
+                    </div>
+                    <div class="detail-content">
+                        <p>明前龙井冲泡水温85℃最佳，玻璃杯冲泡更显汤色。投茶量约3-5克，第一泡30秒出汤，第二泡延长至45秒，第三泡可至1分钟。</p>
+                        <p>水质以山泉水为佳，自来水需静置12小时以上去除氯气。冲泡时采用高冲低斟的手法，既能激发茶香，又能避免茶叶翻滚过烈影响口感。</p>
+                        <p>品饮时先观色，再闻香，最后小口啜饮，让茶汤在口中停留片刻，感受龙井特有的豆香与回甘。</p>
+                    </div>
+
+                    <!-- 评论区 -->
+                    <div class="comments-section">
+                        <h3 class="comments-title"><i class="fas fa-comments"></i> 笔记评论 (5)</h3>
+                        
+                        <!-- 评论输入框 -->
+                        <div class="comment-form">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="comment-input">
+                                <textarea placeholder="分享你的看法..."></textarea>
+                                <button class="submit-comment">发表评论</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 评论列表 -->
+                        <div class="comments-list">
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-author">茶友阿明</div>
+                                    <div class="comment-text">补充一点：春茶龙井建议用75-80℃水温，避免烫坏嫩芽影响鲜味</div>
+                                    <div class="comment-time">2天前</div>
+                                    <div class="comment-actions">
+                                        <span class="comment-action"><i class="far fa-thumbs-up"></i> 赞同</span>
+                                        <span class="comment-action"><i class="far fa-comment"></i> 回复</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-author">茶艺小白</div>
+                                    <div class="comment-text">请问用盖碗冲泡龙井合适吗？一直掌握不好出汤时间</div>
+                                    <div class="comment-time">1天前</div>
+                                    <div class="comment-actions">
+                                        <span class="comment-action"><i class="far fa-thumbs-up"></i> 赞同</span>
+                                        <span class="comment-action"><i class="far fa-comment"></i> 回复</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-author">茶客小雅</div>
+                                    <div class="comment-text">@茶艺小白 盖碗也可以，建议选择浅口盖碗，出汤时要快，新手可以多练习几次</div>
+                                    <div class="comment-time">12小时前</div>
+                                    <div class="comment-actions">
+                                        <span class="comment-action"><i class="far fa-thumbs-up"></i> 赞同</span>
+                                        <span class="comment-action"><i class="far fa-comment"></i> 回复</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 茶话题讨论 -->
+                <div class="tea-topics">
+                    <h3><i class="fas fa-hashtag"></i> 热门茶话题</h3>
+                    <div class="topic-tags">
+                        <div class="topic-tag">#春茶品鉴</div>
+                        <div class="topic-tag">#茶器收藏</div>
+                        <div class="topic-tag">#茶点搭配</div>
+                        <div class="topic-tag">#茶道礼仪</div>
+                        <div class="topic-tag">#古树茶</div>
+                        <div class="topic-tag">#茶与健康</div>
+                        <div class="topic-tag">#冲泡技巧</div>
+                        <div class="topic-tag">#茶叶鉴别</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Pure Tea 茶文化学院 - 分享与共学，传承茶文化</p>
+    </footer>
+
+    <script>
+        // 笔记卡片点击切换详情
+        const noteCards = document.querySelectorAll('.note-card');
+        noteCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // 移除所有卡片的active类
+                noteCards.forEach(c => c.classList.remove('active'));
+                // 为当前点击的卡片添加active类
+                this.classList.add('active');
+                
+                const noteId = this.getAttribute('data-note');
+                updateNoteDetail(noteId, this.querySelector('.note-title').textContent);
+                
+                // 平滑滚动到笔记详情区域
+                document.querySelector('.note-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // 更新笔记详情
+        function updateNoteDetail(noteId, title) {
+            const detailTitle = document.querySelector('.detail-title');
+            const detailContent = document.querySelector('.detail-content');
+            const noteMeta = document.querySelector('.detail-header .note-meta');
+            
+            // 添加过渡动画
+            detailContent.style.opacity = '0';
+            setTimeout(() => {
+                detailTitle.textContent = title;
+                
+                switch(noteId) {
+                    case 'longjing':
+                        detailContent.innerHTML = `
+                            <p>明前龙井冲泡水温85℃最佳，玻璃杯冲泡更显汤色。投茶量约3-5克，第一泡30秒出汤，第二泡延长至45秒，第三泡可至1分钟。</p>
+                            <p>水质以山泉水为佳，自来水需静置12小时以上去除氯气。冲泡时采用高冲低斟的手法，既能激发茶香，又能避免茶叶翻滚过烈影响口感。</p>
+                            <p>品饮时先观色，再闻香，最后小口啜饮，让茶汤在口中停留片刻，感受龙井特有的豆香与回甘。</p>
+                        `;
+                        noteMeta.textContent = '茶客小雅 · 3天前';
+                        break;
+                    case 'teacategories':
+                        detailContent.innerHTML = `
+                            <p>六大茶类各有特色，简单总结我的品鉴感受：</p>
+                            <p>绿茶：清新爽口，带草木香，代表有龙井、碧螺春</p>
+                            <p>红茶：醇厚甘甜，带蜜香或果香，代表有祁门红茶、正山小种</p>
+                            <p>乌龙茶：香气馥郁，回甘明显，代表有铁观音、大红袍</p>
+                            <p>白茶：清甜淡雅，随存放时间增长滋味更醇厚，代表有白牡丹、寿眉</p>
+                            <p>黄茶：温润甘甜，香气独特，代表有君山银针</p>
+                            <p>黑茶：醇厚顺滑，陈香明显，代表有普洱熟茶、六堡茶</p>
+                        `;
+                        noteMeta.textContent = '茶友老林 · 1周前';
+                        break;
+                    case 'teapairing':
+                        detailContent.innerHTML = `
+                            <p>茶与点心的搭配是一门学问，分享我的搭配心得：</p>
+                            <p>绿茶 + 绿豆糕/杏仁饼：绿茶的清爽中和糕点的甜腻</p>
+                            <p>红茶 + 曲奇/蛋糕：红茶的醇厚与奶油类点心相得益彰</p>
+                            <p>乌龙茶 + 凤梨酥/肉脯：浓郁茶香能平衡点心的甜咸</p>
+                            <p>普洱 + 茶点/干果：普洱的厚重感适合搭配有嚼劲的点心</p>
+                            <p>基本原则是：清淡的茶配清淡的点心，浓郁的茶配风味重的点心，互相衬托又不掩盖各自特色。</p>
+                        `;
+                        noteMeta.textContent = '小茶仙 · 2周前';
+                        break;
+                    case 'teapotcare':
+                        detailContent.innerHTML = `
+                            <p>紫砂壶保养是门学问，以下是我的几点心得：</p>
+                            <p>1. 新壶开壶：用茶叶煮3-5分钟，去除壶内的杂质和火气</p>
+                            <p>2. 日常使用后必须彻底清洗，避免茶垢积累影响茶味</p>
+                            <p>3. 不要用洗洁精等化学清洁剂，以免破坏壶的透气性</p>
+                            <p>4. 每次使用后擦干，放在通风处阴干</p>
+                            <p>5. 养壶需耐心，坚持使用同一类茶养壶，时间久了自然会形成漂亮的包浆</p>
+                        `;
+                        noteMeta.textContent = '壶友老李 · 2周前';
+                        break;
+                }
+                
+                // 恢复显示
+                detailContent.style.opacity = '1';
+            }, 300);
+        }
+
+        // 评论提交功能
+        const submitBtn = document.querySelector('.submit-comment');
+        submitBtn.addEventListener('click', function() {
+            const textarea = document.querySelector('.comment-input textarea');
+            const commentText = textarea.value.trim();
+            
+            if (commentText) {
+                const commentsList = document.querySelector('.comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment-item';
+                newComment.innerHTML = `
+                    <div class="comment-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-author">我</div>
+                        <div class="comment-text">${commentText}</div>
+                        <div class="comment-time">刚刚</div>
+                        <div class="comment-actions">
+                            <span class="comment-action"><i class="far fa-thumbs-up"></i> 赞同</span>
+                            <span class="comment-action"><i class="far fa-comment"></i> 回复</span>
+                        </div>
+                    </div>
+                `;
+                
+                commentsList.insertBefore(newComment, commentsList.firstChild);
+                textarea.value = '';
+                
+                // 更新评论计数
+                const countElem = document.querySelector('.comments-title');
+                const currentCount = parseInt(countElem.textContent.match(/\d+/)[0]);
+                countElem.innerHTML = `<i class="fas fa-comments"></i> 笔记评论 (${currentCount + 1})`;
+            }
+        });
+
+        // 支持按Enter提交评论
+        document.querySelector('.comment-input textarea').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                submitBtn.click();
+            }
+        });
+
+        // 评论字数检测
+        const textarea = document.querySelector('.comment-input textarea');
+        textarea.addEventListener('input', function() {
+            if (this.value.trim()) {
+                submitBtn.classList.add('active');
+            } else {
+                submitBtn.classList.remove('active');
+            }
+        });
+
+        // 动态交互功能：点赞、评论等
+        const postActions = document.querySelectorAll('.post-action');
+        postActions.forEach(action => {
+            action.addEventListener('click', function() {
+                if (this.querySelector('.fa-heart')) {
+                    this.classList.toggle('liked');
+                    if (this.classList.contains('liked')) {
+                        const likeCount = parseInt(this.textContent.trim());
+                        this.innerHTML = `<i class="fas fa-heart"></i> ${likeCount + 1}`;
+                    } else {
+                        const likeCount = parseInt(this.textContent.trim());
+                        this.innerHTML = `<i class="fas fa-heart"></i> ${likeCount - 1}`;
+                    }
+                } else if (this.querySelector('.fa-comment')) {
+                    this.classList.toggle('commented');
+                }
+            });
+        });
+
+        // 话题标签点击效果
+        const topicTags = document.querySelectorAll('.topic-tag');
+        topicTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('active');
+                alert(`已选择话题: ${this.textContent}`);
+            });
+        });
+
+        // 加载更多按钮
+        const loadMoreBtn = document.querySelector('.load-more');
+        loadMoreBtn.addEventListener('click', function() {
+            this.textContent = '加载中...';
+            setTimeout(() => {
+                this.textContent = '加载更多';
+                alert('已加载全部内容');
+            }, 1500);
+        });
+
+        // 返回顶部按钮
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 初始化时设置默认笔记为激活状态
+        if (noteCards.length > 0) {
+            noteCards[0].classList.add('active');
+        }
+
+        // 为所有的popular-note-item添加点击事件
+        const popularNotes = document.querySelectorAll('.popular-note-item');
+        popularNotes.forEach((note, index) => {
+            note.addEventListener('click', function() {
+                const titles = ['茶与健康：科学解读茶文化', '新手如何挑选适合自己的茶叶', '茶席设计与布置艺术'];
+                const contents = [
+                    `<p>茶对健康的益处已被多项科学研究证实，以下是一些主要发现：</p>
+                     <p>1. 抗氧化作用：茶叶中的多酚类物质具有强大的抗氧化能力，有助于延缓衰老</p>
+                     <p>2. 心血管健康：适量饮茶有助于降低血压和胆固醇</p>
+                     <p>3. 提高认知能力：茶叶中的咖啡因和茶氨酸组合可提高注意力和警觉性</p>
+                     <p>4. 促进消化：某些茶类如乌龙茶和普洱茶有助于促进消化</p>
+                     <p>但需注意，过量饮茶可能会影响睡眠和铁的吸收，应适量饮用。</p>`,
+                    `<p>作为新手，选择茶叶时可考虑以下几点：</p>
+                     <p>1. 根据口味偏好：喜欢清香型可选择绿茶，喜欢醇厚型可选择红茶或熟普</p>
+                     <p>2. 根据季节：春夏适合饮用清爽的绿茶，秋冬适合饮用温暖的红茶或熟普</p>
+                     <p>3. 根据价格预算：不必追求高价，选择适合自己经济能力的茶叶</p>
+                     <p>4. 尝试小包装：购买前先尝试小包装，确认适合自己口味再购买大包装</p>
+                     <p>5. 了解茶叶产地和制作工艺：不同产地和工艺的茶叶风味差异很大</p>`,
+                    `<p>茶席设计是茶道文化的重要组成部分，以下是一些基本原则：</p>
+                     <p>1. 空间布局：茶席应简洁有序，给人舒适感</p>
+                     <p>2. 色彩搭配：以自然色系为主，避免过于鲜艳的颜色</p>
+                     <p>3. 茶具选择：根据茶类选择合适的茶具，注重协调性</p>
+                     <p>4. 装饰物：可适当添加鲜花、绿植等自然元素，但不宜过多</p>
+                     <p>5. 意境营造：通过整体布置营造出宁静、优雅的氛围</p>
+                     <p>记住，茶席设计的最终目的是为了更好地品味茶汤，不要喧宾夺主。</p>`
+                ];
+                
+                const detailTitle = document.querySelector('.detail-title');
+                const detailContent = document.querySelector('.detail-content');
+                const noteMeta = document.querySelector('.detail-header .note-meta');
+                
+                detailTitle.textContent = titles[index];
+                detailContent.innerHTML = contents[index];
+                noteMeta.textContent = '茶道爱好者 · 1个月前';
+                
+                // 平滑滚动到笔记详情区域
+                document.querySelector('.note-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>

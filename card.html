@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国六大茶类 - 茶文化探索</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "Heiti SC", sans-serif;
+        }
+        body {
+            background-color: #f6fcfa; /* 统一使用淡绿色背景 */
+            padding: 20px;
+            color: #3a291f;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* 返回按钮样式 - 统一设计 */
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .back-button:hover {
+            background-color: #4caf50;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        .back-button i {
+            color: #4caf50;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover i {
+            color: #fff;
+            transform: translateX(-3px);
+        }
+        
+        /* 页面头部样式 - 增强设计感 */
+        .title-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            position: relative;
+            margin-top: 70px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, transparent 100%);
+            padding-top: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+        .title-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #81c784);
+            border-radius: 2px;
+        }
+        .main-title {
+            color: #2e7d32; /* 使用深绿色标题 */
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+        }
+        .main-title::before,
+        .main-title::after {
+            content: '🍃';
+            position: absolute;
+            font-size: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .main-title::before {
+            left: -40px;
+        }
+        .main-title::after {
+            right: -40px;
+        }
+        .subtitle {
+            color: #6d5a48;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            padding: 0 20px;
+        }
+        
+        /* 茶类卡片网格 - 优化布局 */
+        .tea-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        /* 卡片样式 - 增强视觉效果 */
+        .tea-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .tea-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .tea-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 每个茶类卡片顶部特色色条 */
+        .tea-card:nth-child(1)::before { background-color: #52c41a; }
+        .tea-card:nth-child(2)::before { background-color: #fa541c; }
+        .tea-card:nth-child(3)::before { background-color: #faad14; }
+        .tea-card:nth-child(4)::before { background-color: #1890ff; }
+        .tea-card:nth-child(5)::before { background-color: #722ed1; }
+        .tea-card:nth-child(6)::before { background-color: #fa8c16; }
+        .tea-card:hover::before { opacity: 1; }
+        
+        /* 茶类数字标记 */
+        .tea-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3a291f;
+            font-weight: bold;
+            font-size: 1rem;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .tea-card:hover .tea-number {
+            transform: scale(1.1);
+            background-color: #fff;
+        }
+        
+        /* 图片容器 - 增强效果 */
+        .tea-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .tea-img-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+            pointer-events: none;
+        }
+        .tea-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .tea-card:hover .tea-img {
+            transform: scale(1.08);
+        }
+        
+        /* 卡片内容区 - 优化排版 */
+        .tea-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .tea-name {
+            color: #3a291f;
+            font-size: 1.45rem;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1eadf;
+            position: relative;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .tea-card:hover .tea-name {
+            color: #4caf50;
+        }
+        .tea-name::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 40px;
+            height: 3px;
+            background-color: #c8a985;
+            transition: width 0.3s ease;
+        }
+        .tea-card:hover .tea-name::after {
+            width: 80px;
+        }
+        .tea-description {
+            color: #5c4b3d;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        
+        /* 茶类特点标签 - 增强交互 */
+        .tea-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .feature-tag {
+            background-color: #f1eadf;
+            color: #7c6753;
+            padding: 5px 12px;
+            border-radius: 18px;
+            font-size: 0.82rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .feature-tag i {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        .tea-card:hover .feature-tag {
+            background-color: #e8ded0;
+            transform: translateY(-2px);
+        }
+        
+        /* 新增内容区块：茶类比较表 */
+        .comparison-section {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 1100px;
+            animation: fadeIn 1s ease;
+        }
+        .section-title {
+            text-align: center;
+            color: #2e7d32;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #4caf50, #81c784);
+            border-radius: 2px;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .comparison-table th {
+            background-color: #f6fcfa;
+            color: #2e7d32;
+            text-align: left;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-bottom: 2px solid #e0f2f1;
+        }
+        .comparison-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background-color 0.2s ease;
+        }
+        .comparison-table tr:hover td {
+            background-color: #f9fcf9;
+        }
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* 新增内容区块：冲泡指南 */
+        .brewing-guide {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 1100px;
+            animation: fadeIn 1s ease;
+        }
+        .guide-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .guide-item {
+            background-color: #f9fcf9;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #4caf50;
+        }
+        .guide-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .guide-item h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .guide-item p {
+            color: #5c4b3d;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        
+        /* 新增内容区块：茶类推荐搭配 */
+        .tea-pairing {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px auto;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 1100px;
+            animation: fadeIn 1s ease;
+        }
+        .pairing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .pairing-card {
+            background-color: #f9fcf9;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .pairing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            background-color: #e8f5e9;
+        }
+        .pairing-card i {
+            font-size: 2.5rem;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+        .pairing-card h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .pairing-card p {
+            color: #5c4b3d;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        
+        /* 页脚样式 */
+        .footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-radius: 10px;
+        }
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 滚动动画 */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 响应式优化 */
+        @media (max-width: 992px) {
+            .tea-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            .main-title {
+                font-size: 2.2rem;
+            }
+            .main-title::before, .main-title::after {
+                font-size: 1.2rem;
+            }
+            .main-title::before {
+                left: -30px;
+            }
+            .main-title::after {
+                right: -30px;
+            }
+            .comparison-section,
+            .brewing-guide,
+            .tea-pairing {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .back-button {
+                width: 45px;
+                height: 45px;
+                top: -5px;
+                left: -5px;
+            }
+            .back-button i {
+                font-size: 18px;
+            }
+            .title-section {
+                margin-top: 60px;
+            }
+            .main-title {
+                font-size: 1.8rem;
+            }
+            .main-title::before, .main-title::after {
+                display: none;
+            }
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .tea-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .tea-content {
+                padding: 20px;
+            }
+            .tea-img-container {
+                height: 180px;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 返回按钮 -->
+        <button class="back-button" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        
+        <div class="title-section">
+            <h1 class="main-title">中国六大茶类</h1>
+            <p class="subtitle">探索绿茶、红茶、白茶、乌龙茶、黑茶和黄茶的独特风味与文化底蕴，感受中华茶文化的博大精深</p>
+        </div>
+
+        <div class="tea-grid">
+            <!-- 绿茶卡片 -->
+            <div class="tea-card fade-in-section">
+                <span class="tea-number">01</span>
+                <div class="tea-img-container">
+                    <img src="素材/微信图片_20251116151104_156_135.jpg" alt="绿茶" class="tea-img">
+                </div>
+                <div class="tea-content">
+                    <h2 class="tea-name">绿茶</h2>
+                    <p class="tea-description">未经发酵制成的茶，保留了鲜叶的天然物质，茶多酚、儿茶素等营养成分丰富，具有防衰老、防癌等特殊效果。冲泡后茶汤清澈，滋味鲜爽。</p>
+                    <div class="tea-features">
+                        <span class="feature-tag"><i class="fas fa-leaf"></i> 不发酵</span>
+                        <span class="feature-tag"><i class="fas fa-tint"></i> 清汤绿叶</span>
+                        <span class="feature-tag"><i class="fas fa-award"></i> 龙井/碧螺春</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 红茶卡片 -->
+            <div class="tea-card fade-in-section">
+                <span class="tea-number">02</span>
+                <div class="tea-img-container">
+                    <img src="素材/微信图片_20251116151105_157_135.jpg" alt="红茶" class="tea-img">
+                </div>
+                <div class="tea-content">
+                    <h2 class="tea-name">红茶</h2>
+                    <p class="tea-description">属全发酵茶，以适宜的茶树新牙叶为原料，经萎凋、揉捻、发酵、干燥等工艺精制而成，因茶汤呈红色而得名，滋味醇厚甘甜。</p>
+                    <div class="tea-features">
+                        <span class="feature-tag"><i class="fas fa-fire"></i> 全发酵</span>
+                        <span class="feature-tag"><i class="fas fa-tint"></i> 红汤红叶</span>
+                        <span class="feature-tag"><i class="fas fa-award"></i> 祁门红茶/滇红</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 白茶卡片 -->
+            <div class="tea-card fade-in-section">
+                <span class="tea-number">03</span>
+                <div class="tea-img-container">
+                    <img src="素材/微信图片_20251116151106_158_135.jpg" alt="白茶" class="tea-img">
+                </div>
+                <div class="tea-content">
+                    <h2 class="tea-name">白茶</h2>
+                    <p class="tea-description">属微发酵茶，是中国茶类中的特殊珍品。因成品茶多为芽头，满披白毫，如银似雪而得名，具有毫香清鲜、滋味清甜的特点。</p>
+                    <div class="tea-features">
+                        <span class="feature-tag"><i class="fas fa-snowflake"></i> 微发酵</span>
+                        <span class="feature-tag"><i class="fas fa-tint"></i> 白汤白叶</span>
+                        <span class="feature-tag"><i class="fas fa-award"></i> 白毫银针/寿眉</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 乌龙茶卡片 -->
+            <div class="tea-card fade-in-section">
+                <span class="tea-number">04</span>
+                <div class="tea-img-container">
+                    <img src="素材/微信图片_20251116151107_159_135.jpg" alt="乌龙茶" class="tea-img">
+                </div>
+                <div class="tea-content">
+                    <h2 class="tea-name">乌龙茶</h2>
+                    <p class="tea-description">亦称青茶，属于半发酵茶，制作工艺介于绿茶和红茶之间，既有红茶的浓鲜味，又有绿茶的清芬香，香气馥郁持久。</p>
+                    <div class="tea-features">
+                        <span class="feature-tag"><i class="fas fa-wind"></i> 半发酵</span>
+                        <span class="feature-tag"><i class="fas fa-tint"></i> 金黄汤色</span>
+                        <span class="feature-tag"><i class="fas fa-award"></i> 铁观音/大红袍</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 黑茶卡片 -->
+            <div class="tea-card fade-in-section">
+                <span class="tea-number">05</span>
+                <div class="tea-img-container">
+                    <img src="素材/微信图片_20251116151108_160_135.jpg" alt="黑茶" class="tea-img">
+                </div>
+                <div class="tea-content">
+                    <h2 class="tea-name">黑茶</h2>
+                    <p class="tea-description">属于后发酵茶，是中国特有的茶类，生产历史悠久。采用较粗老的原料，经渥堆发酵等工艺制成，具有陈香醇厚的特点。</p>
+                    <div class="tea-features">
+                        <span class="feature-tag"><i class="fas fa-history"></i> 后发酵</span>
+                        <span class="feature-tag"><i class="fas fa-tint"></i> 陈香醇厚</span>
+                        <span class="feature-tag"><i class="fas fa-award"></i> 普洱茶/茯茶</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 黄茶卡片 -->
+            <div class="tea-card fade-in-section">
+                <span class="tea-number">06</span>
+                <div class="tea-img-container">
+                    <img src="素材/微信图片_20251116151109_161_135.jpg" alt="黄茶" class="tea-img">
+                </div>
+                <div class="tea-content">
+                    <h2 class="tea-name">黄茶</h2>
+                    <p class="tea-description">属轻发酵茶类，加工工艺近似绿茶，增加一道"闷黄"工艺，促使多酚叶绿素等物质部分氧化，品质特点是"黄叶黄汤"，滋味鲜醇。</p>
+                    <div class="tea-features">
+                        <span class="feature-tag"><i class="fas fa-lightbulb"></i> 轻发酵</span>
+                        <span class="feature-tag"><i class="fas fa-tint"></i> 黄汤黄叶</span>
+                        <span class="feature-tag"><i class="fas fa-award"></i> 君山银针</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 茶类比较表 -->
+        <div class="comparison-section fade-in-section">
+            <h2 class="section-title">六大茶类对比</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>茶类</th>
+                        <th>发酵程度</th>
+                        <th>加工特点</th>
+                        <th>茶汤色泽</th>
+                        <th>香气特点</th>
+                        <th>代表品种</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>绿茶</td>
+                        <td>不发酵</td>
+                        <td>杀青、揉捻、干燥</td>
+                        <td>浅绿至黄绿</td>
+                        <td>清香、嫩香</td>
+                        <td>西湖龙井、碧螺春、黄山毛峰</td>
+                    </tr>
+                    <tr>
+                        <td>红茶</td>
+                        <td>全发酵</td>
+                        <td>萎凋、揉捻、发酵、干燥</td>
+                        <td>红汤红叶</td>
+                        <td>甜香、花香、果香</td>
+                        <td>祁门红茶、滇红、正山小种</td>
+                    </tr>
+                    <tr>
+                        <td>白茶</td>
+                        <td>微发酵</td>
+                        <td>萎凋、干燥</td>
+                        <td>浅黄、浅绿</td>
+                        <td>毫香、嫩香</td>
+                        <td>白毫银针、白牡丹、寿眉</td>
+                    </tr>
+                    <tr>
+                        <td>乌龙茶</td>
+                        <td>半发酵</td>
+                        <td>萎凋、做青、炒青、揉捻、干燥</td>
+                        <td>金黄或橙黄</td>
+                        <td>兰花香、果香、奶香</td>
+                        <td>铁观音、大红袍、凤凰单丛</td>
+                    </tr>
+                    <tr>
+                        <td>黑茶</td>
+                        <td>后发酵</td>
+                        <td>杀青、揉捻、渥堆、干燥</td>
+                        <td>深褐或橙红</td>
+                        <td>陈香、菌花香</td>
+                        <td>普洱茶、六堡茶、茯砖茶</td>
+                    </tr>
+                    <tr>
+                        <td>黄茶</td>
+                        <td>轻发酵</td>
+                        <td>杀青、闷黄、干燥</td>
+                        <td>黄汤黄叶</td>
+                        <td>嫩栗香、甜香</td>
+                        <td>君山银针、霍山黄芽、蒙顶黄芽</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+        <!-- 茶类推荐搭配 -->
+        <div class="tea-pairing fade-in-section">
+            <h2 class="section-title">茶类推荐搭配</h2>
+            <div class="pairing-cards">
+                <div class="pairing-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>绿茶搭配</h3>
+                    <p>清淡点心、水果、寿司等，绿茶的清新可以平衡食物的油腻感，增强口感层次。</p>
+                </div>
+                <div class="pairing-card">
+                    <i class="fas fa-cookie-bite"></i>
+                    <h3>红茶搭配</h3>
+                    <p>甜点、蛋糕、巧克力、英式下午茶点心，红茶的醇厚与甜点的甜蜜相得益彰。</p>
+                </div>
+                <div class="pairing-card">
+                    <i class="fas fa-lemon"></i>
+                    <h3>白茶搭配</h3>
+                    <p>海鲜、坚果、轻度烘焙食品，白茶的鲜甜可以提升海鲜的鲜美度。</p>
+                </div>
+                <div class="pairing-card">
+                    <i class="fas fa-cheese"></i>
+                    <h3>乌龙茶搭配</h3>
+                    <p>烧烤、辛辣食物、中式点心，乌龙茶的香气和回甘可以缓解辣味，去腥解腻。</p>
+                </div>
+                <div class="pairing-card">
+                    <i class="fas fa-bread-slice"></i>
+                    <h3>黑茶搭配</h3>
+                    <p>油腻食物、肉类、重口味菜肴，黑茶的陈香可以化解油腻，促进消化。</p>
+                </div>
+                <div class="pairing-card">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>黄茶搭配</h3>
+                    <p>轻食、时令水果、传统糕点，黄茶的柔和可以衬托食物的原味。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 茶文化探索 | 以茶为媒，传承中华传统文化</p>
+        </div>
+    </div>
+    
+    <!-- 滚动动画JavaScript -->
+    <script>
+        // 监听滚动，实现元素淡入效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px -10% 0px'
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // 卡片的序号数字动画
+            const teaNumbers = document.querySelectorAll('.tea-number');
+            teaNumbers.forEach((number, index) => {
+                setTimeout(() => {
+                    number.style.opacity = '1';
+                }, 300 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

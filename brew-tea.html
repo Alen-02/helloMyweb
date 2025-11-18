@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茶叶冲泡指南 - Pure Tea 茶文化学院</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #4caf50;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 60px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "☕";
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.05;
+            top: -50px;
+            right: -50px;
+        }
+
+        .header-subtitle {
+            display: inline-block;
+            background-color: #4caf50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #1b5e20;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #388e3c;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px auto;
+            max-width: 700px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            min-width: 150px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 8px;
+        }
+
+        .stat-text {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+
+        .explore-btn:hover {
+            transform: translateY(2px);
+        }
+
+        .explore-btn i {
+            margin-left: 5px;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #2e7d32;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #4caf50;
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        .basics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .basic-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-top: 4px solid #4caf50;
+        }
+
+        .basic-card:nth-child(2) {
+            border-top-color: #2196f3;
+        }
+
+        .basic-card:nth-child(3) {
+            border-top-color: #ff9800;
+        }
+
+        .basic-card:nth-child(4) {
+            border-top-color: #9c27b0;
+        }
+
+        .basic-card:nth-child(5) {
+            border-top-color: #00bcd4;
+        }
+
+        .basic-card:nth-child(6) {
+            border-top-color: #ff5722;
+        }
+
+        .basic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #4caf50;
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .basic-card:nth-child(2) .card-icon {
+            background-color: #e3f2fd;
+            color: #2196f3;
+        }
+
+        .basic-card:nth-child(3) .card-icon {
+            background-color: #fff3e0;
+            color: #ff9800;
+        }
+
+        .basic-card:nth-child(4) .card-icon {
+            background-color: #f3e5f5;
+            color: #9c27b0;
+        }
+
+        .basic-card:nth-child(5) .card-icon {
+            background-color: #e0f7fa;
+            color: #00bcd4;
+        }
+
+        .basic-card:nth-child(6) .card-icon {
+            background-color: #ffebee;
+            color: #ff5722;
+        }
+
+        .basic-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: #2e7d32;
+            margin-bottom: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .param-list {
+            list-style: none;
+        }
+
+        .param-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .param-item:last-child {
+            border-bottom: none;
+        }
+
+        .param-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 5px;
+        }
+
+        .param-name {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .param-value {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .basic-card:nth-child(2) .param-value {
+            color: #2196f3;
+        }
+
+        .basic-card:nth-child(3) .param-value {
+            color: #ff9800;
+        }
+
+        .basic-card:nth-child(4) .param-value {
+            color: #9c27b0;
+        }
+
+        .basic-card:nth-child(5) .param-value {
+            color: #00bcd4;
+        }
+
+        .basic-card:nth-child(6) .param-value {
+            color: #ff5722;
+        }
+
+        .brewing-steps {
+            background-color: #f1f8e9;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .steps-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            background-color: #4caf50;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: #2e7d32;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .tea-types {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .tea-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        /* 美化冲泡要点卡片 */
+        .tea-type-card {
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 添加渐变边框效果 */
+        .tea-type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+        }
+
+        /* 不同茶叶卡片的渐变效果 */
+        .tea-type-card:nth-child(1)::before {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+        }
+
+        .tea-type-card:nth-child(2)::before {
+            background: linear-gradient(90deg, #ff9800, #ffc107);
+        }
+
+        .tea-type-card:nth-child(3)::before {
+            background: linear-gradient(90deg, #f44336, #ff9800);
+        }
+
+        .tea-type-card:nth-child(4)::before {
+            background: linear-gradient(90deg, #795548, #9e9e9e);
+        }
+
+        .tea-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .tea-type-card h3 {
+            color: #2e7d32;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tea-type-card h3 i {
+            color: #4caf50;
+        }
+
+        .tea-type-card:nth-child(1) h3 i {
+            color: #4caf50;
+        }
+
+        .tea-type-card:nth-child(2) h3 i {
+            color: #ff9800;
+        }
+
+        .tea-type-card:nth-child(3) h3 i {
+            color: #f44336;
+        }
+
+        .tea-type-card:nth-child(4) h3 i {
+            color: #795548;
+        }
+
+        .tea-type-card p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .tea-type-card strong {
+            color: #444;
+        }
+
+        .footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .basics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .brewing-steps,
+            .tea-types {
+                padding: 30px 20px;
+            }
+            
+            .step-item {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- 返回按钮 -->
+        <button class="back-button" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> 返回上一页
+        </button>
+        
+        <div class="header-subtitle">从基础到进阶的茶道课程</div>
+        <h1>茶叶冲泡指南</h1>
+        <p>掌握水温、时间与茶量的黄金组合，感受每一片茶叶从唤醒到释放的完整旅程。</p>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-text">茶叶冲泡次数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-text">冲泡基础要素</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10+</div>
+                <div class="stat-text">茶知识解析</div>
+            </div>
+        </div>
+        
+        <a href="#basics" class="explore-btn">
+            冲泡基础详解 <i class="fas fa-chevron-down"></i>
+        </a>
+    </div>
+
+    <div class="content">
+        <h2 class="section-title" id="basics">冲泡基础</h2>
+        
+        <div class="basics-grid">
+            <div class="basic-card">
+                <div class="card-icon">
+                    <i class="fas fa-thermometer-half"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-temperature-high"></i> 水温控制
+                </h3>
+                <p class="card-description">不同茶叶需要不同的水温，这是影响茶汤品质的关键因素。过高的温度会破坏茶叶中的营养成分，过低则无法充分释放香气。</p>
+                <ul class="param-list">
+                    <li class="param-item">
+                        <span class="param-name">绿茶:</span>
+                        <span class="param-value">75-80°C</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">白茶:</span>
+                        <span class="param-value">80-85°C</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">黄茶:</span>
+                        <span class="param-value">80-85°C</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">乌龙茶:</span>
+                        <span class="param-value">85-95°C</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">红茶:</span>
+                        <span class="param-value">90-95°C</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">黑茶:</span>
+                        <span class="param-value">95-100°C</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="basic-card">
+                <div class="card-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-stopwatch"></i> 时间掌握
+                </h3>
+                <p class="card-description">冲泡时间直接影响茶汤的浓度和口感。过长会导致茶汤苦涩，过短则滋味淡薄，掌握恰当的时间是泡好茶的关键。</p>
+                <ul class="param-list">
+                    <li class="param-item">
+                        <span class="param-name">第一泡:</span>
+                        <span class="param-value">30-60秒</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">第二泡:</span>
+                        <span class="param-value">45-75秒</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">第三泡:</span>
+                        <span class="param-value">60-90秒</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">后续每泡:</span>
+                        <span class="param-value">递增30秒</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="basic-card">
+                <div class="card-icon">
+                    <i class="fas fa-weight-hanging"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-balance-scale"></i> 投茶量
+                </h3>
+                <p class="card-description">茶与水的比例影响茶汤的浓度。根据茶叶种类、个人口味和茶具容量，调整合适的投茶量才能获得最佳口感。</p>
+                <ul class="param-list">
+                    <li class="param-item">
+                        <span class="param-name">绿茶:</span>
+                        <span class="param-value">1:50-1:80</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">红茶:</span>
+                        <span class="param-value">1:30-1:50</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">乌龙茶:</span>
+                        <span class="param-value">1:20-1:30</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">普洱茶:</span>
+                        <span class="param-value">1:15-1:25</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="basic-card">
+                <div class="card-icon">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-water"></i> 水质选择
+                </h3>
+                <p class="card-description">优质的水质是泡好茶叶的基础。水中的矿物质含量和pH值会直接影响茶汤的色泽、香气和滋味。</p>
+                <ul class="param-list">
+                    <li class="param-item">
+                        <span class="param-name">山泉水:</span>
+                        <span class="param-value">最佳选择</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">矿泉水:</span>
+                        <span class="param-value">次选</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">自来水:</span>
+                        <span class="param-value">需过滤</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">避免使用:</span>
+                        <span class="param-value">纯净水</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 新增卡片：茶具选择 -->
+            <div class="basic-card">
+                <div class="card-icon">
+                    <i class="fas fa-coffee"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-mug-hot"></i> 茶具选择
+                </h3>
+                <p class="card-description">茶具材质和形状会影响茶水的温度保持和香气散发，不同茶叶适合搭配不同材质的茶具。</p>
+                <ul class="param-list">
+                    <li class="param-item">
+                        <span class="param-name">绿茶:</span>
+                        <span class="param-value">玻璃杯</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">乌龙茶:</span>
+                        <span class="param-value">紫砂壶</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">红茶:</span>
+                        <span class="param-value">白瓷壶</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">普洱茶:</span>
+                        <span class="param-value">粗陶壶</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">花茶:</span>
+                        <span class="param-value">盖碗</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 新增卡片：茶器搭配 -->
+            <div class="basic-card">
+                <div class="card-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="card-title">
+                    <i class="fas fa-toolbox"></i> 茶器搭配
+                </h3>
+                <p class="card-description">完整的茶器组合能够提升泡茶体验，不同功能的茶器在茶道过程中扮演着不同的角色。</p>
+                <ul class="param-list">
+                    <li class="param-item">
+                        <span class="param-name">主泡器:</span>
+                        <span class="param-value">茶壶/盖碗</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">分茶器:</span>
+                        <span class="param-value">公道杯</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">品茗杯:</span>
+                        <span class="param-value">茶杯</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">辅助器:</span>
+                        <span class="param-value">茶漏/茶滤</span>
+                    </li>
+                    <li class="param-item">
+                        <span class="param-name">计量器:</span>
+                        <span class="param-value">茶则/茶匙</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="brewing-steps">
+            <h2 class="section-title">标准冲泡步骤</h2>
+            <div class="steps-list">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>温杯洁具</h3>
+                        <p>用热水冲洗茶具，提高茶具温度，有助于茶叶香气的释放。</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>投茶</h3>
+                        <p>根据茶叶种类和个人口味，放入适量茶叶到茶杯或茶壶中。</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>冲茶</h3>
+                        <p>注入适当温度的水，注意水流的角度和力度，避免损伤茶叶。</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>出汤</h3>
+                        <p>按照适当的时间浸泡后，将茶汤倒入公道杯或直接饮用杯中。</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>品饮</h3>
+                        <p>趁热品尝茶汤，感受其香气、滋味和口感的变化。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tea-types">
+            <h2 class="section-title">不同茶叶的冲泡要点</h2>
+            <div class="tea-types-grid">
+                <div class="tea-type-card">
+                    <h3><i class="fas fa-leaf"></i> 西湖龙井</h3>
+                    <p><strong>水温:</strong> 80°C</p>
+                    <p><strong>投茶量:</strong> 3g/150ml</p>
+                    <p><strong>浸泡时间:</strong> 30秒</p>
+                    <p><strong>特点:</strong> 上投法，先注水后投茶</p>
+                </div>
+                <div class="tea-type-card">
+                    <h3><i class="fas fa-seedling"></i> 铁观音</h3>
+                    <p><strong>水温:</strong> 95°C</p>
+                    <p><strong>投茶量:</strong> 7g/150ml</p>
+                    <p><strong>浸泡时间:</strong> 15-20秒</p>
+                    <p><strong>特点:</strong> 可多次冲泡，香气持久</p>
+                </div>
+                <div class="tea-type-card">
+                    <h3><i class="fas fa-fire"></i> 正山小种</h3>
+                    <p><strong>水温:</strong> 95°C</p>
+                    <p><strong>投茶量:</strong> 5g/150ml</p>
+                    <p><strong>浸泡时间:</strong> 45秒</p>
+                    <p><strong>特点:</strong> 桂圆香明显，滋味醇厚</p>
+                </div>
+                <div class="tea-type-card">
+                    <h3><i class="fas fa-mountain"></i> 熟普洱茶</h3>
+                    <p><strong>水温:</strong> 100°C</p>
+                    <p><strong>投茶量:</strong> 8g/150ml</p>
+                    <p><strong>浸泡时间:</strong> 30秒</p>
+                    <p><strong>特点:</strong> 耐泡，越陈越香</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

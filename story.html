@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茶文化故事 | 千年茶道的传承与创新</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-color: #f7f5f0;
+            padding: 0;
+            position: relative;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* 返回上一页按钮 - 修改：向中间靠拢 */
+        .back-btn {
+            display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #8b5a2b;
+    border: 1px solid rgba(139, 90, 43, 0.2);
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    position: fixed;
+    top: 20px;
+    left: 20%; /* 修改：从居中改为左侧20%位置 */
+    transform: translateX(-50%); /* 保持X轴平移 */
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+        }
+
+        .back-btn:hover {
+            background-color: #8b5a2b;
+            color: #fff;
+            transform: translateX(-50%) translateY(-3px); /* 修改：居中并上移 */
+            box-shadow: 0 4px 8px rgba(139, 90, 43, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 页面头部 - 新风格 */
+        .hero-section {
+            /* 使用更柔和的茶叶素材图片 */
+            background-image: url('素材/微信图片_20251118163806_173_135.jpg');
+            background-size: cover;
+            background-position: center 70%;
+            color: #333;
+            text-align: center;
+            padding: 120px 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #8b5a2b;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6b4226;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        /* 装饰茶叶元素 */
+        .hero-decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            opacity: 0.15;
+            background-image: url('素材/VCG211385086941.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .hero-decoration.deco-1 {
+            top: 30px;
+            left: 10%;
+            transform: rotate(-15deg);
+        }
+
+        .hero-decoration.deco-2 {
+            bottom: 30px;
+            right: 10%;
+            transform: rotate(15deg);
+        }
+
+        /* 引用区块 */
+        .quote-section {
+            background-color: #fff;
+            border-left: 4px solid #8b5a2b;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 900px;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .quote-text {
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .quote-author {
+            text-align: right;
+            color: #8b5a2b;
+            font-weight: 600;
+        }
+
+        /* 卡片容器样式 */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 40px 0 30px;
+            color: #8b5a2b;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #8b5a2b, #cd5c5c);
+            border-radius: 3px;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            padding: 20px 0;
+        }
+
+        .card {
+            width: 280px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(120deg, rgba(139, 90, 43, 0.08), rgba(205, 92, 92, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-header {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.08);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        }
+
+        /* 移除卡片图标相关样式 */
+        .card-body {
+            padding: 22px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: #8b5a2b;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: #cd5c5c;
+        }
+
+        .card-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 15px;
+        }
+
+        .card-tag {
+            background-color: #8b5a2b;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .card:hover .card-tag {
+            background-color: #cd5c5c;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .modal.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            background-color: #f9f6f0;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #8b5a2b;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 20px;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-content-text {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+        }
+
+        .modal-content-text p {
+            margin-bottom: 20px;
+        }
+
+        .modal-content-text:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 修改：缩小弹窗内的图片尺寸 */
+        .modal-image {
+            max-width: 70%; /* 修改：设置最大宽度为70% */
+            height: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            background-color: #f9f6f0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background-color: #fff;
+            color: #718096;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #f7fafc;
+            color: #8b5a2b;
+            border-color: #8b5a2b;
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: #8b5a2b;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            opacity: 1;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #8b5a2b;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(139, 90, 43, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #6b4226;
+            transform: translateY(-5px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .modal-title {
+                font-size: 1.75rem;
+            }
+
+            .modal-image {
+                max-width: 80%; /* 在中等屏幕上稍微放大图片 */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 20px;
+            }
+
+            h1 {
+                font-size: 2.3rem;
+            }
+
+            .card {
+                width: calc(50% - 15px);
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .quote-text {
+                font-size: 1.1rem;
+            }
+            
+            .hero-decoration {
+                width: 100px;
+                height: 100px;
+            }
+
+            .modal-image {
+                max-width: 90%; /* 在小屏幕上进一步放大图片 */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .back-btn {
+                top: 15px;
+                left: 50%; /* 移动端也保持居中 */
+                transform: translateX(-50%);
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
+            .back-btn:hover {
+                transform: translateX(-50%) translateY(-3px);
+            }
+
+            .hero-section {
+                padding: 60px 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .quote-section {
+                padding: 20px 15px;
+            }
+
+            .modal-content {
+                margin: 20% auto;
+                width: 98%;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .hero-decoration {
+                width: 80px;
+                height: 80px;
+                opacity: 0.1;
+            }
+
+            .modal-image {
+                max-width: 100%; /* 在超小屏幕上使用完整宽度 */
+            }
+        }
+
+        /* 加载动画 */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 延迟加载动画 */
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.8s;
+        }
+
+        .delay-5 {
+            animation-delay: 1s;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 返回上一页按钮 -->
+    <a href="javascript:history.back()" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回上一页</span>
+    </a>
+
+    <!-- 页面头部 -->
+    <div class="hero-section fade-in">
+        <!-- 装饰元素 -->
+        <div class="hero-decoration deco-1"></div>
+        <div class="hero-decoration deco-2"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1>茶文化故事</h1>
+                <p class="subtitle">探索千年茶道的传承与创新，聆听茶在世界各地的流转，感受不同文化背景下的茶道精髓，每一页都为你的品茗时光增添新的灵感与智慧。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引用区块 -->
+    <div class="container">
+        <div class="quote-section fade-in delay-1">
+            <p class="quote-text">"茶，香叶，嫩芽。慕诗客，爱僧家。碾雕白玉，罗织红纱。铫煎黄蕊色，碗转曲尘花。夜后邀陪明月，晨前命对朝霞。洗尽古今人不倦，将至醉后岂堪夸。"</p>
+            <p class="quote-author">— 唐代·元稹《一七令·茶》</p>
+        </div>
+
+        <!-- 卡片区域标题 -->
+        <h2 class="section-title fade-in delay-2">精选茶故事</h2>
+
+        <!-- 卡片容器 -->
+        <div class="card-container">
+            <div class="card fade-in delay-2" data-id="1">
+                <div class="card-header">
+                    <img src="素材\微信图片_20251118224859_198_135.jpg" alt="龙井茶" class="card-img">
+                    <div class="card-overlay"></div>
+                    <!-- 移除图标 -->
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">龙井茶的传说</h2>
+                    <p class="card-desc">相传乾隆皇帝下江南时，在杭州西湖边品尝了龙井茶，赞不绝口，并将其封为御茶...</p>
+                    <div class="card-footer">
+                        <span>2024-01-15</span>
+                        <span class="card-tag">茶文化</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in delay-3" data-id="2">
+                <div class="card-header">
+                    <img src="素材\微信图片_20251118224900_199_135.jpg" alt="普洱茶" class="card-img">
+                    <div class="card-overlay"></div>
+                    <!-- 移除图标 -->
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">普洱茶的千年历史</h2>
+                    <p class="card-desc">普洱茶产自云南，有着悠久的历史文化，是茶马古道上的重要商品，越陈越香...</p>
+                    <div class="card-footer">
+                        <span>2024-01-14</span>
+                        <span class="card-tag">茶历史</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in delay-4" data-id="3">
+                <div class="card-header">
+                    <img src="素材/微信图片_20251118224901_200_135.jpg" alt="英国下午茶" class="card-img">
+                    <div class="card-overlay"></div>
+                    <!-- 移除图标 -->
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">英国下午茶的起源</h2>
+                    <p class="card-desc">下午茶文化起源于19世纪的英国，由贝德福德公爵夫人安娜创立，逐渐成为社交活动...</p>
+                    <div class="card-footer">
+                        <span>2024-01-13</span>
+                        <span class="card-tag">世界茶文化</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in delay-3" data-id="4">
+                <div class="card-header">
+                    <img src="素材\微信图片_20251118224903_201_135.jpg" alt="日本茶道" class="card-img">
+                    <div class="card-overlay"></div>
+                    <!-- 移除图标 -->
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">日本茶道的起源</h2>
+                    <p class="card-desc">日本茶道源于中国唐代的饮茶方式，经荣西禅师传入后，逐渐发展出独特的"侘寂"美学...</p>
+                    <div class="card-footer">
+                        <span>2024-01-12</span>
+                        <span class="card-tag">世界茶文化</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in delay-4" data-id="5">
+                <div class="card-header">
+                    <img src="素材\微信图片_20251118224904_202_135.jpg" alt="工夫茶" class="card-img">
+                    <div class="card-overlay"></div>
+                    <!-- 移除图标 -->
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">潮汕工夫茶的讲究</h2>
+                    <p class="card-desc">潮汕工夫茶是中国茶道文化的瑰宝，讲究"和、爱、精、洁、思"，茶具精致，冲泡手法独特...</p>
+                    <div class="card-footer">
+                        <span>2024-01-11</span>
+                        <span class="card-tag">茶艺文化</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in delay-5" data-id="6">
+                <div class="card-header">
+                    <img src="素材\微信图片_20251118224905_203_135.jpg" alt="茶马古道" class="card-img">
+                    <div class="card-overlay"></div>
+                    <!-- 移除图标 -->
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">茶马古道的茶事</h2>
+                    <p class="card-desc">茶马古道不仅是贸易通道，更是茶文化传播的纽带，连接中原与边疆，促进文化交流...</p>
+                    <div class="card-footer">
+                        <span>2024-01-10</span>
+                        <span class="card-tag">历史文化</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal" id="storyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 内容将通过JavaScript动态加载 -->
+            </div>
+            <div class="modal-footer">
+                <div class="modal-actions">
+                    <button class="action-btn" id="likeBtn"><i class="far fa-heart"></i> <span>喜欢</span></button>
+                    <button class="action-btn" id="shareBtn"><i class="far fa-share-square"></i> <span>分享</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2025 茶文化故事 </p>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // DOM元素
+        const cards = document.querySelectorAll('.card');
+        const modal = document.getElementById('storyModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMeta = document.getElementById('modalMeta');
+        const modalBody = document.getElementById('modalBody');
+        const closeModal = document.getElementById('closeModal');
+        const backToTop = document.getElementById('backToTop');
+        const likeBtn = document.getElementById('likeBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        
+        // 故事详细内容
+        const stories = {
+            1: {
+                title: "龙井茶的传说",
+                date: "2024-01-15",
+                category: "茶文化",
+                image: "素材/微信图片_20251118224859_198_135.jpg",
+                content: [
+                    "相传乾隆皇帝下江南时，来到杭州西湖龙井茶区，见茶农正在采摘新茶。他兴致勃勃地加入采摘，刚采了一把，忽闻太监来报太后病重，需速回京。乾隆皇帝便将手中的茶叶随手放入口袋，星夜兼程赶回京城。",
+                    "回到宫中，他才想起口袋里的茶叶，取出时已被体温焐干。他泡了一杯，只见茶叶芽叶舒展，汤色清绿，香气扑鼻，口感醇厚。乾隆龙颜大悦，当即下令将杭州西湖龙井封为\"御茶\"，龙井茶的名声也因此传遍天下。",
+                    "龙井茶不仅有着美丽的传说，更因其卓越的品质而闻名。它色泽翠绿，香气清高，滋味甘醇，形状扁平光滑，被誉为\"绿茶皇后\"。龙井茶的采摘十分讲究，只采清明前后的嫩芽，每一片茶叶都经过精心挑选和炒制。"
+                ]
+            },
+            2: {
+                title: "普洱茶的千年历史",
+                date: "2024-01-14",
+                category: "茶历史",
+                image: "素材/微信图片_20251118224900_199_135.jpg",
+                content: [
+                    "普洱茶产自云南，其历史可追溯至东汉时期。唐代时，普洱茶成为西南地区的重要贸易商品，通过茶马古道远销西藏、四川等地。明清时期，普洱茶的制作工艺逐渐成熟，成为皇家贡品。",
+                    "茶马古道上，马帮们驮着普洱茶穿越崇山峻岭，将这份茶香传播到远方。在漫长的运输过程中，茶叶逐渐发酵，形成了独特的风味。人们发现，存放时间越长的普洱茶，口感越醇厚，因此有了\"越陈越香\"的说法。",
+                    "普洱茶分为生茶和熟茶。生茶是未经人工发酵的茶，需经过数年甚至数十年的自然陈化；熟茶则是经过人工发酵的茶，口感更为温和。如今，普洱茶不仅是一种饮品，更成为了云南文化的一张名片，吸引着世界各地的游客前来品鉴。"
+                ]
+            },
+            3: {
+                title: "英国下午茶的起源",
+                date: "2024-01-13",
+                category: "世界茶文化",
+                image: "素材/微信图片_20251118224901_200_135.jpg",
+                content: [
+                    "19世纪的英国，贝德福德公爵夫人安娜每天下午都会感到疲惫饥饿。当时英国的晚餐时间较晚，通常在晚上8点以后，而午餐和晚餐之间的时间很长。安娜夫人便让仆人在下午4点左右为她准备一壶红茶和一些点心。",
+                    "这种做法逐渐在贵族圈中流行开来，成为了一种社交活动。人们穿着盛装，聚在一起品尝红茶、蛋糕，交流彼此的生活。后来，下午茶文化逐渐传播到民间，成为英国人日常生活的一部分。",
+                    "英式下午茶通常包括三层点心架：底层放三明治，中层放司康饼配奶油和果酱，顶层放蛋糕和甜点。搭配的茶以红茶为主，如大吉岭、阿萨姆或伯爵茶。如今，英式下午茶不仅是一种饮食文化，更成为了英国礼仪和生活方式的象征，吸引着众多游客前来体验。"
+                ]
+            },
+            4: {
+                title: "日本茶道的起源",
+                date: "2024-01-12",
+                category: "世界茶文化",
+                image: "素材/微信图片_20251118224903_201_135.jpg",
+                content: [
+                    "日本茶道源于中国唐代的饮茶方式，由荣西禅师在12世纪传入日本后，经数百年发展逐渐形成独特体系。16世纪的千利休将其推向\"侘寂\"美学巅峰，强调简朴、自然与禅意的融合。",
+                    "茶道仪式包含备茶、点茶、奉茶等严谨流程，茶具的选择、茶室的布置都蕴含着对细节和意境的极致追求。茶室通常是小巧精致的和式建筑，室内摆放着插花和挂画，营造出宁静和谐的氛围。",
+                    "茶道的核心理念是\"和、敬、清、寂\"。\"和\"指和谐，\"敬\"指尊重，\"清\"指清净，\"寂\"指宁静。它不仅是饮茶的方式，更成为日本文化中精神的具象表达，体现了对自然、礼仪与内心宁静的深度追求。"
+                ]
+            },
+            5: {
+                title: "潮汕工夫茶的讲究",
+                date: "2024-01-11",
+                category: "茶艺文化",
+                image: "素材/微信图片_20251118224904_202_135.jpg",
+                content: [
+                    "潮汕工夫茶是中国茶道文化的瑰宝，讲究\"和、爱、精、洁、思\"，茶具精致，冲泡手法独特。潮汕地区几乎家家户户都有一套工夫茶具，茶已经成为当地人日常生活中不可或缺的一部分。",
+                    "工夫茶的茶具小巧精致，包括茶壶、茶杯、茶盘、茶洗等。茶壶通常是宜兴紫砂壶，容量很小，只有几十毫升。茶杯也是小小的，直径只有三四厘米，一杯茶只有一口的量。",
+                    "冲泡工夫茶的过程非常讲究，有\"高冲低洒\"、\"关公巡城\"、\"韩信点兵\"等手法。冲茶时，先将茶叶放入茶壶，用沸水冲洗一遍，然后再正式冲茶。斟茶时，要轮流给每个杯子斟茶，确保每杯茶的浓度一致。潮汕工夫茶不仅是一种饮茶方式，更是一种社交活动，体现了潮汕人热情好客的性格。"
+                ]
+            },
+            6: {
+                title: "茶马古道的茶事",
+                date: "2024-01-10",
+                category: "历史文化",
+                image: "素材/微信图片_20251118224905_203_135.jpg",
+                content: [
+                    "茶马古道是中国古代西南地区一条重要的贸易通道，起源于唐代，兴盛于明清时期。它以马帮为主要运输工具，将四川、云南的茶叶运往西藏、青海等地，同时将这些地区的马匹、皮毛等物资运回中原。",
+                    "茶马古道不仅是贸易通道，更是茶文化传播的纽带。在这条古道上，不同民族、不同地区的文化相互交流、融合，形成了独特的茶马文化。马帮们在漫长的旅途中，创造了许多与茶相关的歌曲、故事和习俗。",
+                    "如今，茶马古道已经不再是主要的贸易通道，但它作为历史文化遗产，仍然吸引着众多游客和研究者。沿着茶马古道，你可以欣赏到壮丽的自然风光，感受到浓郁的民族风情，了解到茶叶在中华文明发展中的重要地位。茶马古道的历史，是一部茶叶传播和文化交流的历史，是中华民族宝贵的文化财富。"
+                ]
+            }
+        };
+
+        // 显示模态框
+        function showModal(id) {
+            const story = stories[id];
+            modalTitle.textContent = story.title;
+            modalMeta.innerHTML = `<span>${story.date}</span><span>${story.category}</span>`;
+            
+            // 构建内容
+            let contentHTML = `<img src="${story.image}" alt="${story.title}" class="modal-image">`;
+            story.content.forEach(paragraph => {
+                contentHTML += `<p class="modal-content-text">${paragraph}</p>`;
+            });
+            
+            modalBody.innerHTML = contentHTML;
+            
+            // 显示模态框
+            modal.style.display = 'block';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            // 禁止页面滚动
+            document.body.style.overflow = 'hidden';
+            
+            // 重置喜欢按钮状态
+            likeBtn.innerHTML = '<i class="far fa-heart"></i> <span>喜欢</span>';
+        }
+
+        // 隐藏模态框
+        function hideModal() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // 卡片点击事件
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                showModal(id);
+            });
+        });
+
+        // 关闭模态框事件
+        closeModal.addEventListener('click', hideModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                hideModal();
+            }
+        });
+
+        // 喜欢按钮事件
+        likeBtn.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            const text = this.querySelector('span');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#cd5c5c';
+                text.textContent = '已喜欢';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+                text.textContent = '喜欢';
+            }
+        });
+
+        // 分享按钮事件
+        shareBtn.addEventListener('click', function() {
+            alert('分享功能已触发，实际项目中可以调用分享API');
+        });
+
+        // 返回顶部功能
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 监听滚动事件
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // 键盘事件 - ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>

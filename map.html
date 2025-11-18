@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茶叶地图查询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            background-color: #f6fcfa; /* 改为淡绿色背景，与其他页面保持一致 */
+            padding: 60px 40px;
+            position: relative; /* 为返回按钮提供定位参考 */
+        }
+
+        /* 返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 200px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #4caf50;
+            border: 1px solid #4caf50;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background-color: #4caf50;
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #2e7d32; /* 深绿色标题 */
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            border-radius: 2px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 18px 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn i {
+            font-size: 18px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .tab-btn.inactive {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn.inactive:hover {
+            background-color: #f8fcf8;
+            border-color: #4caf50;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+        }
+
+        /* 统一宽度容器：与底部模块保持一致 */
+        .map-container, .detail-card, .feature-cards {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+        }
+
+        .map-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            width: 100%;
+            margin: 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8f5e9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-card::before {
+            content: "☕";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            font-size: 180px;
+            opacity: 0.05;
+            color: #4caf50;
+            z-index: 0;
+        }
+
+        .map-icon {
+            font-size: 48px;
+            color: #4caf50;
+            margin-bottom: 25px;
+            z-index: 1;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .map-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            z-index: 1;
+            position: relative;
+        }
+
+        .map-desc {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            z-index: 1;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        /* 中国省份 - 横向布局 */
+        .china-region-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 80px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .china-region-list .region-btn {
+            padding: 18px 30px;
+            font-size: 18px;
+            min-width: 140px;
+            flex: 0 0 auto;
+        }
+
+        /* 世界国家 - 纵向布局 */
+        .world-region-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 1;
+            position: relative;
+        }
+
+        .world-region-list .region-btn {
+            padding: 20px 25px;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+
+        .region-btn {
+            padding: 16px 24px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .region-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #4caf50;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .region-btn:hover, .region-btn.active {
+            border-color: #4caf50;
+            background-color: #e8f5e9;
+            color: #4caf50;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.2);
+        }
+
+        .region-btn:hover::before, .region-btn.active::before {
+            transform: scaleY(1);
+        }
+
+        .detail-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 35px 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8f5e9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+        }
+
+        .detail-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .detail-item {
+            margin-bottom: 25px;
+            padding-left: 10px;
+            border-left: 3px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .detail-item:hover {
+            border-left-color: #4caf50;
+        }
+
+        .detail-item h4 {
+            font-size: 18px;
+            color: #4caf50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .detail-item p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .effect-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .effect-tag {
+            padding: 8px 16px;
+            background-color: #e8f5e9;
+            color: #4caf50;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .effect-tag:hover {
+            background-color: #4caf50;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .feature-cards {
+            display: flex;
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            flex: 1;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e8f5e9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4caf50, #81c784);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-card h3 i {
+            color: #4caf50;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(76, 175, 80, 0.15);
+            background-color: #f8fcf8;
+        }
+
+        .feature-card:hover h3 i {
+            color: #2e7d32;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* 添加加载动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .map-card,
+        .detail-card,
+        .feature-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* 响应式设计优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 30px 20px;
+            }
+            
+            .back-button {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                top: 15px;
+                left: 15px;
+            }
+            
+            h1 {
+                font-size: 28px;
+                margin-top: 20px;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .tab-btn {
+                width: 280px;
+                justify-content: center;
+            }
+            
+            .map-container, .detail-card, .feature-cards {
+                max-width: 100%;
+            }
+            
+            .map-card {
+                padding: 30px 20px;
+            }
+            
+            .feature-cards {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .china-region-list {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 15px;
+                flex-wrap: nowrap;
+                padding-left: 10px;
+            }
+            
+            .china-region-list .region-btn {
+                min-width: 120px;
+                padding: 15px 20px;
+                font-size: 16px;
+            }
+            
+            .world-region-list {
+                max-width: 100%;
+            }
+            
+            .detail-card {
+                padding: 25px 20px;
+            }
+        }
+        
+        .footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 返回按钮 -->
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i> 返回
+    </button>
+    
+    <div class="container">
+        <h1>地图查询</h1>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" id="china-tab">
+                <i class="fas fa-map-marked-alt"></i> 中国茶叶地图
+            </button>
+            <button class="tab-btn inactive" id="world-tab">
+                <i class="fas fa-globe"></i> 世界茶叶地图
+            </button>
+        </div>
+
+        <div class="map-container">
+            <div id="china-map" class="map-card">
+                <div class="map-icon">
+                    <i class="fas fa-map"></i>
+                </div>
+                <h2 class="map-title">中国茶叶地图</h2>
+                <p class="map-desc">点击下方省份，了解当地特色茶叶</p>
+                <div class="china-region-list region-list">
+                    <button class="region-btn" data-region="zhejiang">浙江</button>
+                    <button class="region-btn" data-region="fujian">福建</button>
+                    <button class="region-btn" data-region="yunnan">云南</button>
+                    <button class="region-btn" data-region="anhui">安徽</button>
+                    <button class="region-btn" data-region="sichuan">四川</button>
+                    <button class="region-btn" data-region="hunan">湖南</button>
+                    <button class="region-btn" data-region="guangdong">广东</button>
+                    <button class="region-btn" data-region="jiangxi">江西</button>
+                </div>
+            </div>
+
+            <div id="world-map" class="map-card" style="display: none;">
+                <div class="map-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h2 class="map-title">世界茶叶地图</h2>
+                <p class="map-desc">探索世界各地的茶叶产地和文化</p>
+                <div class="world-region-list region-list">
+                    <button class="region-btn" data-region="china">中国</button>
+                    <button class="region-btn" data-region="india">印度</button>
+                    <button class="region-btn" data-region="srilanka">斯里兰卡</button>
+                    <button class="region-btn" data-region="japan">日本</button>
+                    <button class="region-btn" data-region="kenya">肯尼亚</button>
+                    <button class="region-btn" data-region="uk">英国</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <h3 class="detail-title">选择地区查看详情</h3>
+            <p>点击地图上的地区，了解当地的茶叶特色、功效和文化背景。</p>
+        </div>
+
+        <div class="feature-cards">
+            <div class="feature-card">
+                <h3><i class="fas fa-mountain"></i> 名山寻茶</h3>
+                <p>沿着龙井、武夷山、凤凰山等茶山路线，亲历制茶工艺与茶农故事。</p>
+            </div>
+            <div class="feature-card">
+                <h3><i class="fas fa-calendar-alt"></i> 节气茶事</h3>
+                <p>结合二十四节气规划采茶与品茶时刻，捕捉每一口茶汤的韵味。</p>
+            </div>
+            <div class="feature-card">
+                <h3><i class="fas fa-plane"></i> 世界茶旅</h3>
+                <p>跨越国界造访大吉岭、日本宇治、肯尼亚高原，体验多元茶文化。</p>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        // 标签切换逻辑
+        const chinaTab = document.getElementById('china-tab');
+        const worldTab = document.getElementById('world-tab');
+        const chinaMap = document.getElementById('china-map');
+        const worldMap = document.getElementById('world-map');
+
+        chinaTab.addEventListener('click', () => {
+            chinaTab.classList.remove('inactive');
+            chinaTab.classList.add('active');
+            worldTab.classList.remove('active');
+            worldTab.classList.add('inactive');
+            chinaMap.style.display = 'block';
+            worldMap.style.display = 'none';
+            resetDetail();
+            // 添加动画效果
+            chinaMap.style.animation = 'fadeIn 0.5s ease-out';
+        });
+
+        worldTab.addEventListener('click', () => {
+            worldTab.classList.remove('inactive');
+            worldTab.classList.add('active');
+            chinaTab.classList.remove('active');
+            chinaTab.classList.add('inactive');
+            worldMap.style.display = 'block';
+            chinaMap.style.display = 'none';
+            resetDetail();
+            // 添加动画效果
+            worldMap.style.animation = 'fadeIn 0.5s ease-out';
+        });
+
+        // 中国省份完整数据
+        const chinaRegions = {
+            zhejiang: {
+                title: '浙江茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '龙井茶、碧螺春、西湖龙井、安吉白茶' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '浙江省是中国绿茶的重要产区，以西湖龙井最为著名。龙井茶以其"色绿、香郁、味甘、形美"四绝而闻名于世。' },
+                    { icon: 'fas fa-book', title: '文化背景', content: '龙井茶有着悠久的历史文化，相传乾隆皇帝下江南时品尝后赞不绝口，从此龙井茶成为贡茶。' }
+                ]
+            },
+            fujian: {
+                title: '福建茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '铁观音、大红袍、白毫银针、茉莉花茶' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '福建是乌龙茶、红茶、白茶的主产区，武夷山大红袍被誉为"茶中之王"，安溪铁观音以"七泡有余香"著称。' },
+                    { icon: 'fas fa-book', title: '文化背景', content: '福建茶文化底蕴深厚，武夷岩茶制作技艺被列入国家级非物质文化遗产名录。' }
+                ]
+            },
+            yunnan: {
+                title: '云南茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '普洱茶、滇红、云南白茶、沱茶' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '云南省是普洱茶的原产地，普洱茶以其独特的发酵工艺和越陈越香的特点而闻名。' },
+                    { icon: 'fas fa-heart', title: '主要功效', tags: ['降脂减肥', '暖胃养胃', '助消化', '抗衰老'] },
+                    { icon: 'fas fa-book', title: '文化背景', content: '普洱茶是茶马古道上的重要商品，有着深厚的历史文化底蕴。' }
+                ]
+            },
+            anhui: {
+                title: '安徽茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '黄山毛峰、祁门红茶、六安瓜片、太平猴魁' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '安徽省的黄山毛峰和祁门红茶都是中国十大名茶之一，品质优良。' },
+                    { icon: 'fas fa-heart', title: '主要功效', tags: ['提神醒脑', '抗氧化', '降脂减肥', '美容养颜'] },
+                    { icon: 'fas fa-book', title: '文化背景', content: '黄山毛峰产于黄山风景区，以其"香高、味醇、汤清、色润"而著称。' }
+                ]
+            },
+            sichuan: {
+                title: '四川茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '蒙顶甘露、竹叶青、峨眉雪芽、川红' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '四川省的蒙顶山是中国茶文化的发源地之一，蒙顶甘露历史悠久。' },
+                    { icon: 'fas fa-heart', title: '主要功效', tags: ['提神醒脑', '抗氧化', '降脂减肥', '暖胃养胃'] },
+                    { icon: 'fas fa-book', title: '文化背景', content: '蒙顶山茶文化有着"扬子江中水，蒙山顶上茶"的美誉。' }
+                ]
+            },
+            hunan: {
+                title: '湖南茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '君山银针、安化黑茶、古丈毛尖、高桥银峰' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '湖南省的君山银针是中国十大名茶之一，安化黑茶也有着悠久的历史。' },
+                    { icon: 'fas fa-heart', title: '主要功效', tags: ['降脂减肥', '暖胃养胃', '助消化', '美容养颜'] },
+                    { icon: 'fas fa-book', title: '文化背景', content: '君山银针产于洞庭湖君山岛，有着"金镶玉"的美称。' }
+                ]
+            },
+            guangdong: {
+                title: '广东茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '凤凰单丛、英德红茶、岭头单丛、西岩乌龙茶' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '广东是乌龙茶和红茶的重要产区，凤凰单丛以"香韵独特、单株成茶"著称。' },
+                    { icon: 'fas fa-heart', title: '主要功效', tags: ['降脂减肥', '提神醒脑', '抗氧化', '助消化'] },
+                    { icon: 'fas fa-book', title: '文化背景', content: '凤凰单丛产自潮州凤凰山，有着"茶中香水"的美誉，是乌龙茶类中的珍品。' }
+                ]
+            },
+            jiangxi: {
+                title: '江西茶叶特色',
+                items: [
+                    { icon: 'fas fa-leaf', title: '主要茶叶品种', content: '庐山云雾茶、狗牯脑茶、婺源绿茶、宁红茶' },
+                    { icon: 'fas fa-info-circle', title: '地区特色', content: '江西是绿茶和红茶的主产区，庐山云雾茶因产自庐山而得名，品质优异。' },
+                    { icon: 'fas fa-heart', title: '主要功效', tags: ['降脂减肥', '提神醒脑', '抗氧化', '清热降火'] },
+                    { icon: 'fas fa-book', title: '文化背景', content: '庐山云雾茶是中国十大名茶之一，有着"色秀、香幽、味甘、形美"的特点。' }
+                ]
+            }
+        };
+
+        // 世界国家完整数据
+        const worldRegions = {
+            china: {
+                title: '中国茶叶文化',
+                items: [
+                    { icon: 'fas fa-map-marker-alt', title: '地区概况', content: '中国是茶叶的故乡，有着5000多年的茶文化历史，是世界上最大的茶叶生产国。' },
+                    { icon: 'fas fa-star', title: '著名茶叶', content: '龙井茶、铁观音、普洱茶、碧螺春' },
+                    { icon: 'fas fa-book', title: '茶文化特色', content: '中国茶文化博大精深，包括茶道、茶艺、茶具等多个方面。' }
+                ]
+            },
+            india: {
+                title: '印度茶叶文化',
+                items: [
+                    { icon: 'fas fa-map-marker-alt', title: '地区概况', content: '印度是世界第二大茶叶生产国，以红茶闻名于世，大吉岭红茶被誉为"红茶中的香槟"。' },
+                    { icon: 'fas fa-star', title: '著名茶叶', content: '大吉岭红茶、阿萨姆红茶、尼尔吉里红茶' },
+                    { icon: 'fas fa-book', title: '茶文化特色', content: '印度茶文化以奶茶（Chai）为代表，是日常生活中不可或缺的一部分。' }
+                ]
+            },
+            srilanka: {
+                title: '斯里兰卡茶叶文化',
+                items: [
+                    { icon: 'fas fa-globe', title: '地区概况', content: '斯里兰卡（原锡兰）是世界著名的红茶产区，锡兰红茶享誉全球。' },
+                    { icon: 'fas fa-star', title: '著名茶叶', content: '锡兰红茶、乌瓦红茶、努沃勒埃利耶红茶' },
+                    { icon: 'fas fa-book', title: '茶文化特色', content: '斯里兰卡的茶产业始于19世纪，由英国人引入，如今已成为国家经济的重要支柱。' }
+                ]
+            },
+            japan: {
+                title: '日本茶叶文化',
+                items: [
+                    { icon: 'fas fa-globe', title: '地区概况', content: '日本茶文化独特，以抹茶和煎茶为主，茶道文化闻名世界。' },
+                    { icon: 'fas fa-star', title: '著名茶叶', content: '抹茶、煎茶、玉露、玄米茶' },
+                    { icon: 'fas fa-book', title: '茶文化特色', content: '日本茶道强调"和敬清寂"，体现了日本文化的精髓，是一种综合性的文化艺术形式。' }
+                ]
+            },
+            kenya: {
+                title: '肯尼亚茶叶文化',
+                items: [
+                    { icon: 'fas fa-globe', title: '地区概况', content: '肯尼亚是非洲最大的茶叶生产国，以CTC红茶为主，产量和出口量均居世界前列。' },
+                    { icon: 'fas fa-star', title: '著名茶叶', content: '肯尼亚红茶、CTC红茶' },
+                    { icon: 'fas fa-book', title: '茶文化特色', content: '肯尼亚茶产业始于20世纪初，现已成为国家重要的经济支柱，茶叶出口占外汇收入的很大比例。' }
+                ]
+            },
+            uk: {
+                title: '英国茶叶文化',
+                items: [
+                    { icon: 'fas fa-globe', title: '地区概况', content: '英国虽然不是茶叶产区，但下午茶文化闻名世界，是欧洲最大的茶叶消费国之一。' },
+                    { icon: 'fas fa-star', title: '著名茶叶', content: '英式红茶、伯爵茶、早餐茶' },
+                    { icon: 'fas fa-book', title: '茶文化特色', content: '下午茶文化起源于19世纪的英国，是英国文化的重要组成部分，体现了英国人的生活情趣。' }
+                ]
+            }
+        };
+
+        // 地区点击逻辑
+        document.querySelectorAll('.region-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.region-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const region = this.getAttribute('data-region');
+                const isChinaMap = chinaMap.style.display !== 'none';
+                const regionData = isChinaMap ? chinaRegions[region] : worldRegions[region];
+                
+                if (regionData) {
+                    // 添加加载动画效果
+                    const detailCard = document.querySelector('.detail-card');
+                    detailCard.style.opacity = '0.6';
+                    setTimeout(() => {
+                        renderDetail(regionData);
+                        detailCard.style.opacity = '1';
+                    }, 300);
+                }
+            });
+        });
+
+        // 渲染详情
+        function renderDetail(data) {
+            const detailCard = document.querySelector('.detail-card');
+            detailCard.innerHTML = `<h3 class="detail-title">${data.title}</h3>`;
+            
+            data.items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'detail-item';
+                
+                const h4 = document.createElement('h4');
+                h4.innerHTML = `<i class="fas ${item.icon}"></i> ${item.title}`;
+                itemDiv.appendChild(h4);
+
+                if (item.tags) {
+                    const tagsDiv = document.createElement('div');
+                    tagsDiv.className = 'effect-tags';
+                    item.tags.forEach(tag => {
+                        const tagSpan = document.createElement('span');
+                        tagSpan.className = 'effect-tag';
+                        tagSpan.textContent = tag;
+                        tagsDiv.appendChild(tagSpan);
+                    });
+                    itemDiv.appendChild(tagsDiv);
+                } else {
+                    const p = document.createElement('p');
+                    p.textContent = item.content;
+                    itemDiv.appendChild(p);
+                }
+
+                detailCard.appendChild(itemDiv);
+            });
+        }
+
+        // 重置详情
+        function resetDetail() {
+            const detailCard = document.querySelector('.detail-card');
+            detailCard.innerHTML = `
+                <h3 class="detail-title">选择地区查看详情</h3>
+                <p>点击地图上的地区，了解当地的茶叶特色、功效和文化背景。</p>
+            `;
+            document.querySelectorAll('.region-btn').forEach(btn => btn.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>

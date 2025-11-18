@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茶知识挑战 - Pure Tea 茶文化学院</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f6fcfa;
+            padding: 40px 20px;
+            min-height: 100vh;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100"><path fill="%2300b46a" fill-opacity="0.05" d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z"></path></svg>'),
+                url('素材/微信图片_20251118163806_173_135.jpg');
+            background-size: 200px, cover;
+            background-position: center, center;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        /* 茶叶装饰元素 */
+        .tea-leaf {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.03;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23000000" d="M352 96c0-35.3-28.7-64-64-64s-64 28.7-64 64c0 70.7-57.3 128-128 128-52.9 0-96 43.1-96 96 0 29.3 11.7 57.1 31.9 77.3l7.7 7.7c4.7 4.7 12.3 4.7 17 0l31.1-31.1c12.5-12.5 12.5-32.8 0-45.3-12.5-12.5-32.8-12.5-45.3 0l-7.7 7.7c-12.3-12.3-19.7-29-19.7-46.8 0-39.8 32.2-72 72-72 44.2 0 80 35.8 80 80 0 26.5 21.5 48 48 48s48-21.5 48-48c0-11.6-3.1-22.5-8.6-31.6C430.2 250.2 448 221.1 448 188c0-35.3-28.7-64-64-64s-64 28.7-64 64c0 70.7-57.3 128-128 128-52.9 0-96 43.1-96 96 0 29.3 11.7 57.1 31.9 77.3l7.7 7.7c4.7 4.7 12.3 4.7 17 0l31.1-31.1c12.5-12.5 12.5-32.8 0-45.3-12.5-12.5-32.8-12.5-45.3 0l-7.7 7.7c-12.3-12.3-19.7-29-19.7-46.8 0-39.8 32.2-72 72-72 44.2 0 80 35.8 80 80 0 26.5 21.5 48 48 48s48-21.5 48-48c0-11.6-3.1-22.5-8.6-31.6C430.2 250.2 448 221.1 448 188c0-35.3-28.7-64-64-64z"/></svg>');
+        }
+        
+        .tea-leaf:nth-child(1) {
+            top: 10%;
+            right: 5%;
+            transform: rotate(25deg);
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .tea-leaf:nth-child(2) {
+            bottom: 10%;
+            left: 5%;
+            transform: rotate(-30deg);
+            animation: float 18s ease-in-out infinite reverse;
+        }
+        
+        .tea-leaf:nth-child(3) {
+            top: 40%;
+            left: -5%;
+            transform: rotate(10deg);
+            animation: float 12s ease-in-out infinite;
+        }
+
+        /* 返回按钮样式 */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #00b46a 0%, #008c53 100%);
+            color: white;
+            padding: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "☕";
+            position: absolute;
+            font-size: 180px;
+            opacity: 0.05;
+            top: -30px;
+            right: -30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quiz-container {
+            padding: 32px;
+            position: relative;
+        }
+
+        .progress {
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e6f7f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b46a 0%, #008c53 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+            box-shadow: 0 0 10px rgba(0, 180, 106, 0.4);
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: right;
+        }
+
+        .timer {
+            position: absolute;
+            right: 0;
+            top: -25px;
+            background-color: #f0f9f0;
+            color: #008c53;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 180, 106, 0.15);
+        }
+
+        .question {
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease;
+            display: none;
+            position: relative;
+            background-color: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f0f0;
+        }
+
+        .question.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .question-number {
+            display: inline-block;
+            background-color: #e6f7f0;
+            color: #00b46a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .hint-button {
+            position: absolute;
+            right: 24px;
+            top: 24px;
+            background-color: #fff7e6;
+            color: #fa8c16;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .hint-button:hover {
+            background-color: #fff1d6;
+            transform: translateY(-1px);
+        }
+
+        .hint-button:disabled {
+            background-color: #f5f5f5;
+            color: #d9d9d9;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hint {
+            background-color: #fff7e6;
+            border-left: 4px solid #fa8c16;
+            padding: 12px;
+            margin-top: 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #8c4510;
+            display: none;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option {
+            background-color: #f9f9f9;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 106, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option:hover {
+            background-color: #f0f9f0;
+            border-color: #e6f7f0;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .option.selected {
+            border-color: #00b46a;
+            background-color: #e6f7f0;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 180, 106, 0.15);
+        }
+
+        .option.correct {
+            border-color: #00b46a;
+            background-color: #e6f7f0;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 180, 106, 0.15);
+            animation: correctPulse 0.5s ease;
+        }
+
+        .option.incorrect {
+            border-color: #ff4d4f;
+            background-color: #fff2f0;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(255, 77, 79, 0.15);
+            animation: shake 0.5s ease;
+        }
+
+        .option .checkbox {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .option.selected .checkbox {
+            border-color: #00b46a;
+            background-color: #00b46a;
+            animation: scaleIn 0.2s ease;
+        }
+
+        .option.correct .checkbox {
+            border-color: #00b46a;
+            background-color: #00b46a;
+        }
+
+        .option.correct .checkbox::after {
+            content: "✓";
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .option.incorrect .checkbox {
+            border-color: #ff4d4f;
+            background-color: #ff4d4f;
+        }
+
+        .option.incorrect .checkbox::after {
+            content: "✗";
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .feedback {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .feedback.correct {
+            background-color: #e6f7f0;
+            color: #008c53;
+            display: block;
+            border-left: 4px solid #00b46a;
+        }
+
+        .feedback.incorrect {
+            background-color: #fff2f0;
+            color: #a8071a;
+            display: block;
+            border-left: 4px solid #ff4d4f;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00b46a 0%, #008c53 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 180, 106, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 180, 106, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #e6e6e6;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .results {
+            text-align: center;
+            padding: 40px 32px;
+            animation: fadeIn 0.5s ease;
+            display: none;
+            position: relative;
+        }
+
+        .results-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            animation: bounce 1s ease infinite;
+        }
+
+        .results h2 {
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #00b46a;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 4px rgba(0, 180, 106, 0.3);
+            animation: scaleScore 1s ease;
+        }
+
+        .results-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .question-stats {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: left;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-stats h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-item:hover {
+            background-color: rgba(0, 180, 106, 0.05);
+            padding-left: 8px;
+        }
+
+        .stat-question {
+            color: #333;
+            flex: 1;
+        }
+
+        .stat-result {
+            font-weight: 600;
+        }
+
+        .stat-result.correct {
+            color: #00b46a;
+        }
+
+        .stat-result.incorrect {
+            color: #ff4d4f;
+        }
+
+        .share-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .share-button {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .share-button:hover {
+            background-color: #e6e6e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #fa8c16;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 16px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: translateY(-50%) scale(0); }
+            to { transform: translateY(-50%) scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(5px); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        @keyframes correctPulse {
+            0% { transform: translateX(5px) scale(1); }
+            50% { transform: translateX(5px) scale(1.05); }
+            100% { transform: translateX(5px) scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes scaleScore {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(250, 140, 22, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(250, 140, 22, 0.8); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0 -20px;
+                border-radius: 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quiz-container, .results {
+                padding: 24px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .timer {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 16px;
+                display: inline-block;
+            }
+            
+            .hint-button {
+                position: relative;
+                right: auto;
+                top: auto;
+                margin-bottom: 16px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 装饰元素 -->
+        <div class="tea-leaf"></div>
+        <div class="tea-leaf"></div>
+        <div class="tea-leaf"></div>
+        
+        <div class="header">
+             <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i> 返回上一页
+            </button>
+            <h1>茶知识挑战</h1>
+            <p>通过这些简单有趣的问题，检验你对茶文化的了解程度吧！</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="progress">
+                <div class="timer">
+                    <i class="fas fa-clock"></i> <span id="timeElapsed">00:00</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">问题 1 / 6</div>
+            </div>
+
+            <!-- 问题 1 -->
+            <div class="question active" data-id="1">
+                <div class="question-number">问题 1</div>
+                <button class="hint-button" onclick="showHint(1)">
+                    <i class="fas fa-lightbulb"></i> 提示
+                </button>
+                <div class="question-text">龙井茶的产地在我国哪个省份？</div>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        A. 云南省
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="B">
+                        B. 浙江省
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="C">
+                        C. 福建省
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="D">
+                        D. 四川省
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div class="hint" data-id="hint1">龙井茶产自浙江省杭州市西湖周边，以西湖龙井最为著名。</div>
+                <div class="feedback" data-correct="正确！龙井茶产自浙江省杭州市西湖周边。" data-incorrect="答错了！龙井茶产自浙江省杭州市西湖周边。">
+                    <!-- 反馈信息将由JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 问题 2 -->
+            <div class="question" data-id="2">
+                <div class="question-number">问题 2</div>
+                <button class="hint-button" onclick="showHint(2)">
+                    <i class="fas fa-lightbulb"></i> 提示
+                </button>
+                <div class="question-text">下列哪种茶属于发酵茶？</div>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        A. 绿茶
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="B">
+                        B. 白茶
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="C">
+                        C. 红茶
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="D">
+                        D. 黄茶
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div class="hint" data-id="hint2">发酵程度是茶叶分类的重要标准，全发酵茶的茶汤通常呈红色。</div>
+                <div class="feedback" data-correct="正确！红茶是全发酵茶。" data-incorrect="答错了！红茶是全发酵茶。">
+                    <!-- 反馈信息将由JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 问题 3 -->
+            <div class="question" data-id="3">
+                <div class="question-number">问题 3</div>
+                <button class="hint-button" onclick="showHint(3)">
+                    <i class="fas fa-lightbulb"></i> 提示
+                </button>
+                <div class="question-text">茶道中的"茶道四规"是指？</div>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        A. 和、敬、清、寂
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="B">
+                        B. 温、良、恭、俭
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="C">
+                        C. 仁、义、礼、智
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="D">
+                        D. 真、善、美、雅
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div class="hint" data-id="hint3">这是日本茶道的核心理念，强调和谐、尊重、清净和宁静。</div>
+                <div class="feedback" data-correct="正确！和、敬、清、寂是茶道的核心精神。" data-incorrect="答错了！茶道四规是指和、敬、清、寂。">
+                    <!-- 反馈信息将由JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 问题 4 -->
+            <div class="question" data-id="4">
+                <div class="question-number">问题 4</div>
+                <button class="hint-button" onclick="showHint(4)">
+                    <i class="fas fa-lightbulb"></i> 提示
+                </button>
+                <div class="question-text">普洱茶主要产自哪个地区？</div>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        A. 湖南安化
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="B">
+                        B. 云南普洱
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="C">
+                        C. 安徽黄山
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="D">
+                        D. 江苏苏州
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div class="hint" data-id="hint4">普洱茶的名称来源于其产地名称。</div>
+                <div class="feedback" data-correct="正确！普洱茶主要产自云南省普洱市及周边地区。" data-incorrect="答错了！普洱茶主要产自云南省普洱市及周边地区。">
+                    <!-- 反馈信息将由JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 问题 5 -->
+            <div class="question" data-id="5">
+                <div class="question-number">问题 5</div>
+                <button class="hint-button" onclick="showHint(5)">
+                    <i class="fas fa-lightbulb"></i> 提示
+                </button>
+                <div class="question-text">"功夫茶"是哪个地区的特色茶文化？</div>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        A. 广东潮汕
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="B">
+                        B. 福建安溪
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="C">
+                        C. 江苏宜兴
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="D">
+                        D. 浙江杭州
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div class="hint" data-id="hint5">这是我国东南沿海地区的特色茶文化，以精巧的茶具和讲究的冲泡方法著称。</div>
+                <div class="feedback" data-correct="正确！功夫茶是广东潮汕地区的特色茶文化。" data-incorrect="答错了！功夫茶是广东潮汕地区的特色茶文化。">
+                    <!-- 反馈信息将由JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 问题 6 -->
+            <div class="question" data-id="6">
+                <div class="question-number">问题 6</div>
+                <button class="hint-button" onclick="showHint(6)">
+                    <i class="fas fa-lightbulb"></i> 提示
+                </button>
+                <div class="question-text">茶叶中含有哪种物质有助于提神醒脑？</div>
+                <div class="options">
+                    <div class="option" data-value="A">
+                        A. 维生素C
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="B">
+                        B. 咖啡因
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="C">
+                        C. 茶多酚
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option" data-value="D">
+                        D. 蛋白质
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+                <div class="hint" data-id="hint6">这种物质也存在于咖啡中，具有兴奋中枢神经的作用。</div>
+                <div class="feedback" data-correct="正确！茶叶中的咖啡因有助于提神醒脑。" data-incorrect="答错了！茶叶中的咖啡因有助于提神醒脑。">
+                    <!-- 反馈信息将由JS动态填充 -->
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" disabled>上一题</button>
+                <button class="btn btn-primary" id="nextBtn">下一题</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="results-icon" id="resultsIcon">🎉</div>
+            <h2>恭喜完成挑战！</h2>
+            <div class="results-score" id="resultsScore">0 分</div>
+            <div class="results-message" id="resultsMessage"></div>
+            <div id="resultBadge"></div>
+            
+            <div class="share-container">
+                <button class="share-button" onclick="shareResult()">
+                    <i class="fas fa-share-alt"></i> 分享结果
+                </button>
+                <button class="share-button" onclick="copyResult()">
+                    <i class="fas fa-copy"></i> 复制结果
+                </button>
+            </div>
+            
+            <div class="question-stats">
+                <h3>答题详情</h3>
+                <div id="statsContainer">
+                    <!-- 答题详情将由JS动态填充 -->
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="restartBtn">重新开始</button>
+        </div>
+    </div>
+
+    <script>
+        // 正确答案
+        const correctAnswers = {
+            1: "B",
+            2: "C",
+            3: "A",
+            4: "B",
+            5: "A",
+            6: "B"
+        };
+
+        // 用户答案
+        const userAnswers = {};
+
+        // 是否已使用提示
+        const hintUsed = {};
+
+        // 当前问题
+        let currentQuestion = 1;
+        const totalQuestions = 6;
+
+        // 计时器
+        let startTime;
+        let timerInterval;
+        let timeElapsed = 0;
+
+        // DOM元素
+        const questions = document.querySelectorAll('.question');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const results = document.getElementById('results');
+        const resultsScore = document.getElementById('resultsScore');
+        const resultsMessage = document.getElementById('resultsMessage');
+        const resultsIcon = document.getElementById('resultsIcon');
+        const statsContainer = document.getElementById('statsContainer');
+        const restartBtn = document.getElementById('restartBtn');
+        const timeElapsedEl = document.getElementById('timeElapsed');
+        const resultBadge = document.getElementById('resultBadge');
+
+        // 初始化
+        initQuiz();
+
+        // 初始化测验
+        function initQuiz() {
+            // 启动计时器
+            startTime = new Date().getTime();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // 初始化选项点击事件
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectOption(this);
+                });
+            });
+
+            // 上一题按钮
+            prevBtn.addEventListener('click', goToPreviousQuestion);
+
+            // 下一题按钮
+            nextBtn.addEventListener('click', goToNextQuestion);
+
+            // 重新开始按钮
+            restartBtn.addEventListener('click', restartQuiz);
+
+            // 初始化问题显示
+            updateQuestion();
+        }
+
+        // 选择选项
+        function selectOption(option) {
+            const questionId = option.closest('.question').dataset.id;
+            
+            // 移除同问题下其他选项的选中状态
+            option.closest('.options').querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // 添加选中状态
+            option.classList.add('selected');
+            
+            // 保存用户答案
+            userAnswers[questionId] = option.dataset.value;
+            
+            // 启用下一题按钮
+            nextBtn.disabled = false;
+        }
+
+        // 显示提示
+        function showHint(questionId) {
+            if (hintUsed[questionId]) return;
+            
+            hintUsed[questionId] = true;
+            const hint = document.querySelector(`.hint[data-id="hint${questionId}"]`);
+            const hintBtn = document.querySelector(`.question[data-id="${questionId}"] .hint-button`);
+            
+            hint.style.display = 'block';
+            hintBtn.disabled = true;
+            
+            // 轻微降低该题分数（如果答对的话）
+            // 这里只是标记，真正计算时处理
+        }
+
+        // 上一题
+        function goToPreviousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                updateQuestion();
+            }
+        }
+
+        // 下一题
+        function goToNextQuestion() {
+            // 如果是最后一题，显示结果
+            if (currentQuestion === totalQuestions) {
+                showResults();
+            } else {
+                currentQuestion++;
+                updateQuestion();
+            }
+        }
+
+        // 更新当前显示的问题
+        function updateQuestion() {
+            // 隐藏所有问题
+            questions.forEach(q => q.classList.remove('active'));
+            
+            // 显示当前问题
+            const currentQuestionEl = document.querySelector(`.question[data-id="${currentQuestion}"]`);
+            currentQuestionEl.classList.add('active');
+            
+            // 更新进度条
+            progressFill.style.width = `${(currentQuestion / totalQuestions) * 100}%`;
+            progressText.textContent = `问题 ${currentQuestion} / ${totalQuestions}`;
+            
+            // 更新按钮状态
+            prevBtn.disabled = currentQuestion === 1;
+            nextBtn.disabled = !userAnswers[currentQuestion];
+            
+            // 更改按钮文本
+            nextBtn.textContent = currentQuestion === totalQuestions ? '完成挑战' : '下一题';
+        }
+
+        // 更新计时器
+        function updateTimer() {
+            timeElapsed++;
+            const minutes = Math.floor(timeElapsed / 60).toString().padStart(2, '0');
+            const seconds = (timeElapsed % 60).toString().padStart(2, '0');
+            timeElapsedEl.textContent = `${minutes}:${seconds}`;
+        }
+
+        // 显示结果
+        function showResults() {
+            // 停止计时器
+            clearInterval(timerInterval);
+            
+            // 计算分数
+            let score = 0;
+            for (let i = 1; i <= totalQuestions; i++) {
+                if (userAnswers[i] === correctAnswers[i]) {
+                    // 如果使用了提示，得分减半
+                    score += hintUsed[i] ? 0.5 : 1;
+                }
+            }
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // 更新结果显示
+            resultsScore.textContent = `${score.toFixed(1)} / ${totalQuestions}`;
+            
+            // 根据分数显示不同的消息和图标
+            let message = '';
+            let icon = '';
+            let badge = '';
+            
+            if (percentage === 100) {
+                message = '完美！你真是茶知识大师！';
+                icon = '🌟';
+                badge = '<span class="badge">茶神级别</span>';
+            } else if (percentage >= 80) {
+                message = '很棒！你对茶文化有相当深入的了解。';
+                icon = '👍';
+                badge = '<span class="badge">高级茶人</span>';
+            } else if (percentage >= 60) {
+                message = '不错！继续学习，你会成为茶专家的。';
+                icon = '😊';
+                badge = '<span class="badge">中级茶人</span>';
+            } else {
+                message = '加油！多了解一些茶文化知识吧。';
+                icon = '📚';
+                badge = '<span class="badge">初学茶人</span>';
+            }
+            
+            // 添加用时信息
+            message += `<br><small>用时：${timeElapsedEl.textContent}</small>`;
+            
+            // 如果使用了提示，添加提示信息
+            const hintsUsedCount = Object.keys(hintUsed).length;
+            if (hintsUsedCount > 0) {
+                message += `<br><small>使用了 ${hintsUsedCount} 个提示</small>`;
+            }
+            
+            resultsMessage.innerHTML = message;
+            resultsIcon.textContent = icon;
+            resultBadge.innerHTML = badge;
+            
+            // 生成答题详情
+            statsContainer.innerHTML = '';
+            for (let i = 1; i <= totalQuestions; i++) {
+                const isCorrect = userAnswers[i] === correctAnswers[i];
+                const questionText = document.querySelector(`.question[data-id="${i}"] .question-text`).textContent;
+                const userAns = userAnswers[i] || '未作答';
+                
+                const statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                
+                const questionSpan = document.createElement('span');
+                questionSpan.className = 'stat-question';
+                questionSpan.textContent = `问题 ${i}: ${questionText.substring(0, 30)}...`;
+                
+                const resultSpan = document.createElement('span');
+                resultSpan.className = `stat-result ${isCorrect ? 'correct' : 'incorrect'}`;
+                resultSpan.textContent = isCorrect ? '正确' : `错误 (选了${userAns})`;
+                
+                statItem.appendChild(questionSpan);
+                statItem.appendChild(resultSpan);
+                statsContainer.appendChild(statItem);
+            }
+            
+            // 显示结果，隐藏问题
+            document.querySelector('.quiz-container').style.display = 'none';
+            results.style.display = 'block';
+            
+            // 显示所有问题的正确答案
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionEl = document.querySelector(`.question[data-id="${i}"]`);
+                const options = questionEl.querySelectorAll('.option');
+                const feedback = questionEl.querySelector('.feedback');
+                
+                // 标记正确和错误选项
+                options.forEach(option => {
+                    if (option.dataset.value === correctAnswers[i]) {
+                        option.classList.add('correct');
+                    }
+                    if (option.dataset.value === userAnswers[i] && option.dataset.value !== correctAnswers[i]) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                // 显示反馈
+                const isCorrect = userAnswers[i] === correctAnswers[i];
+                feedback.textContent = isCorrect ? feedback.dataset.correct : feedback.dataset.incorrect;
+                feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            }
+        }
+
+        // 重新开始
+        function restartQuiz() {
+            // 重置状态
+            currentQuestion = 1;
+            timeElapsed = 0;
+            Object.keys(userAnswers).forEach(key => delete userAnswers[key]);
+            Object.keys(hintUsed).forEach(key => delete hintUsed[key]);
+            
+            // 移除所有选项的选中和反馈状态
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // 隐藏反馈和提示
+            document.querySelectorAll('.feedback').forEach(feedback => {
+                feedback.classList.remove('correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.hint').forEach(hint => {
+                hint.style.display = 'none';
+            });
+            
+            document.querySelectorAll('.hint-button').forEach(button => {
+                button.disabled = false;
+            });
+            
+            // 隐藏结果，显示问题
+            results.style.display = 'none';
+            document.querySelector('.quiz-container').style.display = 'block';
+            
+            // 重置计时器
+            clearInterval(timerInterval);
+            timeElapsedEl.textContent = '00:00';
+            startTime = new Date().getTime();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // 更新问题
+            updateQuestion();
+        }
+
+        // 分享结果
+        function shareResult() {
+            const score = resultsScore.textContent;
+            const message = `我在茶知识挑战中获得了${score}分！快来测试你对茶文化的了解程度吧！`;
+            
+            // 简单的分享提示
+            alert(`分享内容已复制到剪贴板：\n${message}`);
+        }
+
+        // 复制结果
+        function copyResult() {
+            const score = resultsScore.textContent;
+            const percentage = Math.round((parseFloat(score) / totalQuestions) * 100);
+            const message = `茶知识挑战成绩：${score}\n正确率：${percentage}%\n用时：${timeElapsedEl.textContent}`;
+            
+            navigator.clipboard.writeText(message).then(() => {
+                alert('成绩已复制到剪贴板！');
+            }).catch(err => {
+                alert('复制失败，请手动复制：' + message);
+            });
+        }
+    </script>
+</body>
+</html>
